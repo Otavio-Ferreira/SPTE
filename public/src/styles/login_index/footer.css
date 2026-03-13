@@ -1,0 +1,10 @@
+.rodape {
+    text-align: center;
+}
+
+.rodape__creditos {
+    background-color: var(--cor-primaria);
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+}

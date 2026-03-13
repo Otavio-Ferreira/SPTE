@@ -1,0 +1,28 @@
+/* biblioteca de icones - bootstrap icons */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+
+/* variaveis */
+:root {
+    --cor-primaria: #2d4875; 
+    --cor-fundo: #f4f5f7; 
+    --cor-borda: #c8c8c8;
+    --cor-texto: #333333;
+    --cor-fundo-menu: #e6e9f0;
+}
+
+
+/* reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; 
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+}

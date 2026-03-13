@@ -1,0 +1,67 @@
+services:
+    # image project
+    app-mvc:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - redis
+        networks:
+            - spte
+
+    # nginx
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "8000:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - spte
+
+    # db mysql
+    db:
+        image: mysql:8.0
+        platform: linux/x86_64
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: spte_db
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: 123
+        volumes:
+            - ./.docker/mysql/dbdata:/var/lib/mysql
+        ports:
+            - "3300:3306"
+        networks:
+            - spte
+
+    # PHPMyAdmin
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        platform: linux/x86_64
+        restart: unless-stopped
+        ports:
+            - "8080:80"
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+        networks:
+            - spte
+
+    # redis
+    redis:
+        image: redis:latest
+        networks:
+            - spte
+
+networks:
+    spte:
+        driver: bridge

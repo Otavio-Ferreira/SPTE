@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sistema de Proteção de Trajetória Escolares - SPTE</title>
+
+        <link rel="stylesheet" href="/src/styles/global/global.css" />
+
+        <link rel="stylesheet" href="/src/styles/login_index/header.css" />
+        <link rel="stylesheet" href="/src/styles/login_index/styles.css" />
+        <link rel="stylesheet" href="/src/styles/login_index/footer.css" />
+
+        <script type="module" src="/src/js/ui/login_index/main.js" defer></script>
+    </head>
+    <body>
+        <header class="cabecalho">
+            <div class="cabecalho-logo-titulo">
+                <div class="logo">
+                    <img
+                        src="/src/assets/images/logo-ufca.png"
+                        alt="Logo da universidade federal do cariri"
+                        height="14"
+                    />
+                </div>
+                <div class="titulos">
+                    <h1>SPTE</h1>
+                    <h2>Sistema de Proteção de Trajetória Escolares</h2>
+                </div>
+            </div>
+            <div>
+              <form class="cabecalho-login" id="form-login" method="POST" action="/">
+                  <div class="campo">
+                      <label for="usuario">Email</label>
+                      <input
+                          type="email"
+                          id="usuario"
+                          name="email"
+                          placeholder="Digite seu email"
+                          required
+                      />
+                  </div>
+                  <div class="campo">
+                      <label for="senha">Senha</label>
+                      <input
+                          type="password"
+                          id="senha"
+                          name="password"
+                          required
+                          placeholder="Digite sua senha"
+                      />
+                  </div>
+                  <button type="submit" class="btn-entrar">Entrar</button>
+              </form>
+              <?php if (isset($_SESSION['errorLogin'])) : ?>
+                <div style="margin-top: 10px; color: red;" role="alert">
+                  <?= $_SESSION['errorLogin']; ?>
+                </div>
+              <?php unset($_SESSION['errorLogin']);?>
+            </div>
+      <?php endif; ?>
+        </header>
+
+        <div class="container-principal">
+            <aside class="menu-lateral">
+                <nav>
+                    <div class="menu-grupo">
+                        <h3 class="menu-categoria">Institucional</h3>
+                        <ul class="menu-lista">
+                            <li class="menu-item ativo">
+                                <a href="#" id="link-inicio">
+                                    Página Inicial
+                                </a>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="#" id="link-sobre">
+                                    Sobre o Projeto SPTE
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="menu-grupo">
+                        <h3 class="menu-categoria">Acesso Rápido</h3>
+                        <ul class="menu-lista">
+                            <li class="menu-item">
+                                <a href="#">Calendário Acadêmico</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">Portal da Secretaria</a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#">Suporte Técnico</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </aside>
+
+            <main class="conteudo">
+                <section class="secao" id="secao-inicio">
+                    <h2 class="titulo">Bem-vindo ao SPTE</h2>
+
+                    <p class="descricao">
+                        O
+                        <strong
+                            >Sistema de Proteção de Trajetória Escolares
+                            (SPTE)</strong
+                        >
+                        é uma plataforma dedicada a identificar, monitorar e
+                        apoiar alunos com risco potencial de abandono escolar.
+                        Nosso objetivo é fornecer dados claros para que
+                        professores e coordenadores possam agir preventivamente.
+                    </p>
+
+                    <h3 class="subtitulo">Nossos Pilares de Análise:</h3>
+
+                    <div class="pilares">
+                        <article class="pilar-card">
+                            <div class="pilar-icone">
+                                <i class="bi bi-calendar-week-fill"></i>
+                            </div>
+                            <h4>Frequência Escolar</h4>
+                            <p>
+                                Monitoramento contínuo cruzado com o calendário
+                                letivo oficial.
+                            </p>
+                        </article>
+
+                        <article class="pilar-card">
+                            <div class="pilar-icone">
+                                <i class="bi bi-clipboard-data-fill"></i>
+                            </div>
+                            <h4>Desempenho Acadêmico</h4>
+                            <p>
+                                Acompanhamento das médias semestrais para
+                                identificar quedas bruscas de rendimento.
+                            </p>
+                        </article>
+
+                        <article class="pilar-card">
+                            <div class="pilar-icone">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <h4>Perfil Socioeconômico</h4>
+                            <p>
+                                Análise de categorias de renda familiar para
+                                entender o contexto do aluno fora da sala de
+                                aula.
+                            </p>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="secao oculto" id="secao-sobre">
+                    <h2 class="titulo">Sobre o Projeto SPTE</h2>
+
+                    <div class="card-texto">
+                        <h3 class="subtitulo">Contextualização</h3>
+                        <p>
+                            A evasão e o abandono escolar são desafios complexos
+                            que afetam diretamente o desenvolvimento social e
+                            acadêmico. Muitas vezes, os sinais de que um aluno
+                            está prestes a abandonar os estudos aparecem de
+                            forma silenciosa e fragmentada: uma sequência de
+                            faltas, uma queda abrupta nas notas ou mudanças na
+                            estrutura socioeconômica familiar.
+                        </p>
+
+                        <h3 class="subtitulo">A Nossa Missão</h3>
+                        <p>
+                            O
+                            <strong
+                                >SPTE (Sistema de Proteção de Trajetória
+                                Escolares)</strong
+                            >
+                            nasceu da necessidade de unificar essas informações.
+                            Nossa missão é transformar dados isolados em
+                            <strong>conhecimento acionável</strong>. Através do
+                            cruzamento de frequência, desempenho e perfil
+                            socioeconômico, o sistema gera alertas preventivos,
+                            permitindo que a equipe pedagógica atue de forma
+                            preventiva, acolhendo o aluno antes que a evasão se
+                            concretize.
+                        </p>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <footer class="rodape">
+            <div class="rodape__creditos">
+                <p>SPTE | Departamento de Tecnologia | Copyright © 2026</p>
+            </div>
+        </footer>
+    </body>
+</html>

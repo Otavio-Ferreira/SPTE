@@ -1,0 +1,173 @@
+.container-principal {
+    display: flex;
+    flex: 1; 
+    margin: 20px;
+    background-color: white;
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.menu-lateral {
+    width: 220px;
+    background-color: var(--cor-fundo-menu);
+    border-right: 1px solid var(--cor-borda);
+}
+
+.menu-grupo {
+    margin-bottom: 10px; 
+}
+
+.menu-categoria {
+    font-size: 11px;
+    text-transform: uppercase; 
+    color: #666;
+    padding: 15px 15px 5px 15px;
+    letter-spacing: 1px; 
+    border-bottom: 1px solid var(--cor-borda);
+    margin-bottom: 5px;
+}
+
+.menu-lista {
+    list-style: none;
+}
+
+.menu-item a {
+    display: block;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: var(--cor-texto);
+    border-bottom: 1px solid white;
+    font-size: 14px;
+}
+
+.menu-item a:hover {
+    background-color: #d1d6e5;
+    font-weight: bold;
+}
+
+.menu-item.ativo a {
+    background-color: #bbccff;
+    font-weight: bold;
+}
+
+.conteudo {
+    flex: 1; 
+    padding: 30px;
+}
+
+
+.secao {
+    max-width: 800px; 
+    margin: 0 auto; 
+    padding: 20px 0;
+}
+
+/* Secao inicio (pagina-inicial) */
+#secao-inicio .titulo {
+    font-size: 28px;
+    color: var(--cor-primaria);
+    margin-bottom: 15px;
+}
+
+#secao-inicio .descricao {
+    font-size: 16px;
+    line-height: 1.6; 
+    color: #444;
+    margin-bottom: 30px;
+}
+
+#secao-inicio .subtitulo {
+    font-size: 20px;
+    color: var(--cor-texto);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--cor-borda);
+    padding-bottom: 5px;
+}
+
+#secao-inicio .pilares {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.pilares .pilar-card {
+    display: inline-flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px; 
+    padding: 20px;
+    flex: 1; 
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    transition: 0.4s;
+    cursor: default;
+}
+
+.pilares .pilar-card:hover {
+    scale: 1.08;
+    border: 1px solid var(--cor-primaria);
+}
+
+.pilar-card .pilar-icone {
+    font-size: 50px;
+    margin-bottom: 10px;
+    color: var(--cor-primaria)
+}
+
+.pilar-card h4 {
+    color: var(--cor-primaria);
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.pilar-card p {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* sessao sobre (Sobre o projeto SPTE) */
+
+#secao-sobre .titulo {
+    font-size: 28px;
+    color: var(--cor-primaria);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--cor-primaria);
+    padding-bottom: 10px;
+}
+
+#secao-sobre .card-texto {
+    background-color: #ffffff;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+#secao-sobre .card-texto .subtitulo {
+    font-size: 18px;
+    color: var(--cor-texto);
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+#secao-sobre .card-texto h3:first-child {
+    margin-top: 0; 
+}
+
+#secao-sobre .card-texto p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #444;
+    text-align: justify; 
+}
+
+
+
+
+/* utilitarios */
+
+.oculto {
+    display: none !important;
+}

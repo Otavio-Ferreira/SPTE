@@ -1,0 +1,67 @@
+<div class="card">
+    <div class="card-header d-flex flex-wrap justify-content-between align-content-center">
+        <h5 class="mt-auto mb-auto">Adicionar usuário</h5>
+
+        <form method="POST" action="/adicionar/turma">
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control rounded-3" name="serie" placeholder="name@example.com" required>
+        <label for="floatingInput">Serie</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control rounded-3" name="ano" id="floatingPassword" placeholder="Password" required>
+        <label for="floatingPassword">Ano</label>
+      </div>
+      <div class="form-floating mb-3">
+        <select name="turno">
+            <option value="">Selecione</option>
+            <option value="Manhã">Manhã</option>
+            <option value="Tarde">Tarde</option>
+            <option value="Integral">Integral</option>
+            <option value="Noite">Noite</option>
+        </select>
+        <label for="floatingPassword">Turno</label>
+      </div>
+      <div class="form-floating mb-3">
+        <select name="id_usuario">
+            <option value="">Selecione</option>
+            <?php foreach ($this->view->usuarios as $key => $usuario) :?>
+                <option value="<?= $usuario['id'] ?>"><?= $usuario['nome'] ?></option>
+            <?php endforeach; ?>
+
+        </select>
+        <label for="floatingPassword">Responsável</label>
+      </div>
+      <button class="btn btn-outline-dark" type="submit">
+          Adicionar
+      </button>
+    </form>
+    </div>
+    <div>
+        barra de busca
+        <input type="text">
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Série</th>
+                    <th>Ano</th>
+                    <th>Turno</th>
+                    <th style="width: 160px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->view->turmas as $indice => $item) : ?>
+                    <tr>
+                        <td><?= $item['serie']; ?></td>
+                        <td><?= $item['ano']; ?></td>
+                        <td><?= $item['turno']; ?></td>
+                        <td>
+                            <button class="btn btn-sm btn-secondary">Ver alunos</button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
