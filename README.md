@@ -151,5 +151,5 @@ na raiz do projeto:
 - composer dump-autoload
 - composer update
 
-abrir app: localhost:8000 
-abrir phpmyadmin: localhost:8080 
+-abrir app: localhost:8000 
+-abrir phpmyadmin: localhost:8080 
