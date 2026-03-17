@@ -146,63 +146,63 @@ CREATE TABLE `Media` (
 
 ```sql
 
--- 1. Inserindo Categorias de Renda
+-- Inserindo Categorias de Renda
 INSERT INTO Categoria_Renda (nome, maximo, minimo) VALUES
 ('Classe E (Classe Baixa)', 600.00, 0.00),
 ('Classe D (Classe Média)', 2000.00, 601.00),
 ('Classe C (Classe Alta)', 10000.00, 2001.00);
 
--- 2. Inserindo Usuários do Sistema
+-- Inserindo Usuários do Sistema
 INSERT INTO Usuario (nome, email, senha, tipo) VALUES
 ('Roberto Mendes', 'roberto@escola.com', 'hash_123', 'PROFESSOR'),
 ('Julia Lima', 'julia@escola.com', 'hash_123', 'COORDENADOR'),
 ('Mônica Silva', 'monica@escola.com', 'hash_123', 'DIRETOR');
 
--- 3. Inserindo Calendário Letivo
+-- Inserindo Calendário Letivo
 INSERT INTO Calendario_Mes (mes, ano, total_aulas_prevista) VALUES
 (2, 2024, 20),
 (3, 2024, 22);
 
--- 4. Inserindo Critérios de Frequência (Ex: Alerta abaixo de 75%)
+-- Inserindo Critérios de Frequência (Ex: Alerta abaixo de 75%)
 INSERT INTO Criterio_Frequencia (maximo, minimo, valor) VALUES
 (100.00, 75.00, 75.00);
 
--- 5. Inserindo Turmas
+-- Inserindo Turmas
 INSERT INTO Turma (serie, ano, turno) VALUES
 (9, 2024, 'Matutino'),
 (1, 2024, 'Vespertino');
 
--- 6. Vinculando Usuários às Turmas (Tabela Associativa N:N)
+-- Vinculando Usuários às Turmas (Tabela Associativa N:N)
 INSERT INTO Usuario_Turma (id_usuario, id_turma) VALUES
-(1, 1), -- O professor Roberto ensina no 9º Ano
-(1, 2); -- O professor Roberto também ensina no 1º Ano
+(1, 1),
+(1, 2);
 
--- 7. Inserindo Alunos
+-- Inserindo Alunos
 INSERT INTO Aluno (id_categoria, id_turma, nome, rua, bairro, cidade, estado) VALUES
 (2, 1, 'Carlos Silva', 'Rua das Flores', 'Centro', 'Juazeiro do Norte', 'CE'),
 (1, 1, 'Ana Souza', 'Av. Brasil', 'Lagoa', 'Crato', 'CE');
 
--- 8. Inserindo o Núcleo Familiar dos Alunos
+-- Inserindo o Núcleo Familiar dos Alunos
 INSERT INTO Nucleo_Familiar (id_aluno, ano, parentesco) VALUES
 (1, '2024', 'Mãe'),
 (2, '2024', 'Avó');
 
--- 9. Inserindo Frequência Diária
+-- Inserindo Frequência Diária
 INSERT INTO Frequencia (id_aluno, id_turma, id_calendario, assiduidade) VALUES
-(1, 1, 1, 19.0), -- Carlos faltou 1 dia em Fevereiro
-(2, 1, 1, 12.0); -- Ana faltou 8 dias em Fevereiro (Risco de Evasão!)
+(1, 1, 1, 19.0),
+(2, 1, 1, 12.0);
 
--- 10. Inserindo Médias Acadêmicas
+-- Inserindo Médias Acadêmicas
 INSERT INTO Media (id_aluno, nota, ano, semestre) VALUES
 (1, 8.5, '2024', '1'),
-(2, 4.5, '2024', '1'); -- Ana com nota baixa (Risco de Evasão!)
+(2, 4.5, '2024', '1');
 
 ```
 
 ## Scritp de Consultas
 
 ```sql
--- 1. Listar os Alunos, as suas Turmas e a Categoria de Renda
+-- Listar os Alunos, as suas Turmas e a Categoria de Renda
 SELECT 
     A.nome AS Aluno, 
     T.serie AS Ano_Escolar, 
@@ -212,7 +212,7 @@ FROM Aluno A
 JOIN Turma T ON A.id_turma = T.id
 JOIN Categoria_Renda C ON A.id_categoria = C.id;
 
--- 2. Consultar as Notas de uma Turma Específica
+-- Consultar as Notas de uma Turma Específica
 SELECT 
     A.nome AS Aluno, 
     M.nota AS Media_Final, 
@@ -222,7 +222,7 @@ JOIN Aluno A ON M.id_aluno = A.id
 JOIN Turma T ON A.id_turma = T.id
 WHERE T.serie = 3;
 
--- 3. Consultar o Núcleo Familiar do Aluno
+-- Consultar o Núcleo Familiar do Aluno
 
 SELECT 
     A.nome AS Aluno, 
