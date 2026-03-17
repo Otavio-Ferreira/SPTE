@@ -148,9 +148,9 @@ CREATE TABLE `Media` (
 
 -- 1. Inserindo Categorias de Renda
 INSERT INTO Categoria_Renda (nome, maximo, minimo) VALUES
-('Classe E (Extrema Pobreza)', 600.00, 0.00),
-('Classe D (Baixa Renda)', 2000.00, 601.00),
-('Classe C (Classe Média)', 10000.00, 2001.00);
+('Classe E (Classe Baixa)', 600.00, 0.00),
+('Classe D (Classe Média)', 2000.00, 601.00),
+('Classe C (Classe Alta)', 10000.00, 2001.00);
 
 -- 2. Inserindo Usuários do Sistema
 INSERT INTO Usuario (nome, email, senha, tipo) VALUES
@@ -199,6 +199,39 @@ INSERT INTO Media (id_aluno, nota, ano, semestre) VALUES
 
 ```
 
+## Scritp de Consultas
+
+```sql
+-- 1. Listar os Alunos, as suas Turmas e a Categoria de Renda
+SELECT 
+    A.nome AS Aluno, 
+    T.serie AS Ano_Escolar, 
+    T.turno AS Turno, 
+    C.nome AS Categoria_Socioeconomica
+FROM Aluno A
+JOIN Turma T ON A.id_turma = T.id
+JOIN Categoria_Renda C ON A.id_categoria = C.id;
+
+-- 2. Consultar as Notas de uma Turma Específica
+SELECT 
+    A.nome AS Aluno, 
+    M.nota AS Media_Final, 
+    M.semestre AS Semestre
+FROM Media M
+JOIN Aluno A ON M.id_aluno = A.id
+JOIN Turma T ON A.id_turma = T.id
+WHERE T.serie = 3;
+
+-- 3. Consultar o Núcleo Familiar do Aluno
+
+SELECT 
+    A.nome AS Aluno, 
+    N.parentesco AS Responsavel, 
+    N.ano AS Ano_Registo
+FROM Nucleo_Familiar N
+JOIN Aluno A ON N.id_aluno = A.id;
+
+```
 para rodar: baixar docker e docker compose
 
 na raiz do projeto:
