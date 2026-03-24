@@ -1,0 +1,100 @@
+<div class="secao" id="secao-historico">
+  
+  <div class="d-flex align-items-center gap-3 mb-4 border-bottom pb-2">
+      <a href="/turma/alunos?id=<?= $this->view->aluno['id_turma'] ?>" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 btn-ajax">
+          <i class="bi bi-arrow-left"></i> Voltar para Turma
+      </a>
+      <h2 class="titulo fs-3 m-0" style="color: var(--cor-primaria, #0d6efd);">Histórico do Aluno</h2>
+  </div>
+
+  <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body bg-light rounded">
+          <h5 class="card-title text-primary mb-3"><i class="bi bi-person-badge"></i> Informações Pessoais</h5>
+          <div class="row text-secondary">
+              <div class="col-md-4">
+                  <strong>Nome:</strong> <br> <?= htmlspecialchars($this->view->aluno['nome'] ?? 'N/A'); ?>
+              </div>
+              <div class="col-md-4">
+                  <strong>Matrícula/ID:</strong> <br> <?= htmlspecialchars($this->view->aluno['id'] ?? 'N/A'); ?>
+              </div>
+              <div class="col-md-4">
+                  <strong>ID da Turma:</strong> <br> <?= htmlspecialchars($this->view->aluno['id_turma'] ?? 'N/A'); ?>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="row mt-4">
+      
+      <div class="col-md-6">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="m-0 text-secondary"><i class="bi bi-calendar-check"></i> Frequência</h5>
+          </div>
+          
+          <div class="table-responsive rounded shadow-sm border">
+              <table class="table table-hover table-striped align-middle text-center m-0">
+                  <thead class="table-light">
+                      <tr>
+                          <th>Turma (ID)</th>
+                          <th>Calendário (ID)</th>
+                          <th>Assiduidade</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <?php if (!empty($this->view->frequencias)): ?>
+                          <?php foreach ($this->view->frequencias as $freq) : ?>
+                              <tr>
+                                  <td><?= htmlspecialchars($freq['id_turma']); ?></td>
+                                  <td><?= htmlspecialchars($freq['id_calendario']); ?></td>
+                                  <td class="fw-bold <?= ($freq['assiduidade'] >= 75) ? 'text-success' : 'text-danger' ?>">
+                                      <?= htmlspecialchars($freq['assiduidade']); ?>%
+                                  </td>
+                              </tr>
+                          <?php endforeach; ?>
+                      <?php else: ?>
+                          <tr>
+                              <td colspan="3" class="text-muted p-4">Nenhum registro de frequência encontrado.</td>
+                          </tr>
+                      <?php endif; ?>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+
+      <div class="col-md-6 mt-4 mt-md-0">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="m-0 text-secondary"><i class="bi bi-journal-text"></i> Médias</h5>
+          </div>
+          
+          <div class="table-responsive rounded shadow-sm border">
+              <table class="table table-hover table-striped align-middle text-center m-0">
+                  <thead class="table-light">
+                      <tr>
+                          <th>Ano</th>
+                          <th>Semestre</th>
+                          <th>Nota Final</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <?php if (!empty($this->view->medias)): ?>
+                          <?php foreach ($this->view->medias as $media) : ?>
+                              <tr>
+                                  <td><?= htmlspecialchars($media['ano']); ?></td>
+                                  <td><?= htmlspecialchars($media['semestre']); ?>º</td>
+                                  <td class="fw-bold <?= ($media['nota'] >= 7.0) ? 'text-success' : 'text-danger' ?>">
+                                      <?= htmlspecialchars($media['nota']); ?>
+                                  </td>
+                              </tr>
+                          <?php endforeach; ?>
+                      <?php else: ?>
+                          <tr>
+                              <td colspan="3" class="text-muted p-4">Nenhum registro de notas encontrado.</td>
+                          </tr>
+                      <?php endif; ?>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+
+  </div>
+</div>

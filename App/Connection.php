@@ -15,6 +15,7 @@
         return $conn;
       } catch (\PDOException $e) {
         //throw $th;
+        die("Erro de conexão com o banco: " . $e->getMessage());
       }
     }
   }

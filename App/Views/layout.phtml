@@ -5,37 +5,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SPTE</title>
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="./src/styles/global/global.css" />
+  <link rel="stylesheet" href="./src/styles/login_index/header.css" />
+  
+  
+  <link rel="stylesheet" href="/caminho/para/seus/estilos.css">
 </head>
 
-<body>
-  <header class="bg-primary-subtle p-2">
-    <ul class="nav nav-pills justify-content-end">
-      <li class='nav-item'>
-        <a class='nav-link fw-bold <?= ($this->getActive() == "index") ? 'active text-white': 'text-dark'?>' aria-current='page' href='/home'>Home</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link fw-bold <?= ($this->getActive() == "carrinho") ? 'active text-white': 'text-dark'?>' href='/favoritos'>Usuários</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link fw-bold text-dark' href='/sair'>Sair</a>
-      </li>
-    </ul>
-  </header>
-  <!-- msg de error -->
-   <?php if (isset($_SESSION['msg'])) : ?>
-        <div class="alert alert-<?= $_SESSION['msg']['type']; ?> text-center" role="alert">
+<body class="bg-light d-flex flex-column min-vh-100">
+
+  <header class="cabecalho">
+            <div class="cabecalho-logo-titulo">
+                <div class="logo">
+                    <img
+                        src="/src/assets/images/logo-ufca.png"
+                        alt="Logo da universidade federal do cariri"
+                        height="14"
+                    />
+                </div>
+                <div class="titulos">
+                    <h1>SPTE</h1>
+                    <h2>Sistema de Proteção de Trajetória Escolares</h2>
+                </div>
+            </div>
+            <div class="cabecalho-login d-flex align-items-center gap-3">
+        <span class="fs-6">Bem-vindo(a)</span>
+        <a class="btn btn-light btn-sm fw-bold" href="/sair">Sair</a>
+    </div>
+        </header>
+
+  <div class="container-principal d-flex flex-grow-1 m-3 bg-white border shadow-sm rounded">
+    
+    <aside class="menu-lateral border-end" style="width: 220px; background-color: var(--cor-fundo-menu, #f8f9fa);">
+      <div class="menu-grupo mt-3">
+        <div class="menu-categoria text-uppercase text-muted px-3 pb-2 border-bottom" style="font-size: 11px; letter-spacing: 1px;">
+          Navegação
+        </div>
+        <ul class="menu-lista list-unstyled m-0">
+          <li class="menu-item <?= ($this->getActive() == 'index') ? 'bg-primary-subtle border-end border-primary border-4' : '' ?>">
+            <a class="d-block p-3 text-decoration-none <?= ($this->getActive() == 'index') ? 'text-primary fw-bold' : 'text-dark' ?>" href="/home">Home</a>
+          </li>
+          <li class="menu-item <?= ($this->getActive() == 'carrinho') ? 'bg-primary-subtle border-end border-primary border-4' : '' ?>">
+            <a class="d-block p-3 text-decoration-none <?= ($this->getActive() == 'carrinho') ? 'text-primary fw-bold' : 'text-dark' ?>" href="/favoritos">Usuários / Turmas</a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <main id="main-content" class="conteudo flex-grow-1 p-4">
+      <?php if (isset($_SESSION['msg'])) : ?>
+        <div class="alert alert-<?= $_SESSION['msg']['type']; ?> alert-dismissible fade show text-center" role="alert">
           <?= $_SESSION['msg']['text']; ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <?php unset($_SESSION['msg']);?>
       <?php endif; ?>
-  <main class="p-5">
-    <?php
-    $this->content();
-    ?>
-  </main>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+
+      <?php $this->content(); ?>
+    </main>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Usamos delegação de eventos no body para garantir que funcione 
+    // mesmo em elementos que forem adicionados dinamicamente depois
+    document.body.addEventListener('click', function(e) {
+        
+        // Verifica se clicou no botão ou no ícone dentro dele
+        let btn = e.target.closest('.btn-ajax');
+        
+        if (btn) {
+            e.preventDefault(); // Impede o recarregamento padrão da página
+            let url = btn.getAttribute('href');
+
+            // Faz a requisição para buscar a página de alunos
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    // Substitui o conteúdo da tag main pelo HTML recebido
+                    document.getElementById('main-content').innerHTML = html;
+                })
+                .catch(error => console.error('Erro ao carregar a página:', error));
+        }
+    });
+});
+</script>
 </body>
 
 </html>

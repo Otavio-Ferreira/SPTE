@@ -30,5 +30,59 @@
 
       $this->render("index", "layout");
     }
+
+    public function alunos() {
+      // 1. Verifica se o ID da turma foi passado na URL (?id=...)
+      $id_turma = isset($_GET['id']) ? $_GET['id'] : null;
+
+      // Se não houver ID, redireciona de volta para a home
+      if (!$id_turma) {
+          header('Location: /home');
+          exit;
+      }
+
+      // 2. Instancia o modelo de Alunos
+      // Nota: Precisa de ter um modelo Aluno.php criado em App\Models
+      $alunoModel = Container::getModel('Aluno');
+
+      // 3. Busca os alunos daquela turma específica
+      // Assumindo que criará um método getByTurmaId() no seu modelo Aluno
+      $alunos = $alunoModel->getByTurmaId($id_turma);
+
+      // (Opcional) Pode também buscar os dados da Turma para mostrar no título
+      // $turmaModel = Container::getModel('Turma');
+      // $this->view->turma_atual = $turmaModel->getById($id_turma);
+
+      // 4. Passa a lista de alunos para a view (para o foreach no alunos.phtml)
+      $this->view->alunos = $alunos;
+
+      // 5. Renderiza o ficheiro 'alunos.phtml' utilizando o 'layout.phtml'
+      $this->render("aluno", "layout_fetch");
+    }
+
+    public function historico() {
+      // 1. Verifica se o ID do aluno foi passado na URL (?id=...)
+      $id_aluno = isset($_GET['id']) ? $_GET['id'] : null;
+
+      if (!$id_aluno) {
+          header('Location: /home');
+          exit;
+      }
+
+      
+      $alunoModel = Container::getModel('Aluno');
+      $mediaModel = Container::getModel('Media');
+      $freqModel = Container::getModel('Frequencia');
+      
+      $aluno = $alunoModel->getById($id_aluno);
+      $frequencias = $freqModel->getByAlunoId($id_aluno);
+      $medias = $mediaModel->getByAlunoId($id_aluno);
+      
+      $this->view->aluno = $aluno;
+      $this->view->frequencias = $frequencias;
+      $this->view->medias = $medias;
+
+      $this->render("historico", "layout_fetch");
+    }
   }
 ?>

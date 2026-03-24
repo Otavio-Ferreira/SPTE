@@ -40,6 +40,18 @@
         'auth' => true
       );
 
+      $routes['turma_alunos'] = array(
+    'route' => '/turma/alunos',
+    'controller' => 'HomeController',
+    'action' => 'alunos'
+);
+
+      $routes['aluno_historico'] = array(
+        'route' => '/aluno/historico',
+        'controller' => 'HomeController',
+        'action' => 'historico'
+      );
+
       $this->setRoutes($routes);
 
     }
