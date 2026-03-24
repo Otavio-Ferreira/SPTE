@@ -27,8 +27,13 @@
       $this->view->turmas = $turmas;
       $this->view->usuario = $usuario_logado;
       $this->view->usuarios = $usuarios;
+    // Verifica se a requisição tem o "crachá" do AJAX
+    $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+    
+    // Se for AJAX, usa o layout limpo. Se for acesso normal, usa o layout completo.
+    $layout_escolhido = $isAjax ? "layout_fetch" : "layout";
 
-      $this->render("index", "layout");
+    $this->render("index", $layout_escolhido);
     }
 
     public function alunos() {
@@ -83,6 +88,14 @@
       $this->view->medias = $medias;
 
       $this->render("historico", "layout_fetch");
+    }
+
+    public function usuarios() {
+      $usuarios = Container::getModel('Usuario');
+
+      $this->view->usuarios = $usuarios->getAll();
+
+      $this->render("usuario", "layout_fetch");
     }
   }
 ?>

@@ -43,13 +43,22 @@
       $routes['turma_alunos'] = array(
     'route' => '/turma/alunos',
     'controller' => 'HomeController',
-    'action' => 'alunos'
+    'action' => 'alunos',
+        'auth' => true
 );
 
       $routes['aluno_historico'] = array(
         'route' => '/aluno/historico',
         'controller' => 'HomeController',
-        'action' => 'historico'
+        'action' => 'historico',
+        'auth' => true
+      );
+
+      $routes['usuarios'] = array(
+        'route' => '/usuarios',
+        'controller' => 'HomeController',
+        'action' => 'usuarios',
+        'auth' => true
       );
 
       $this->setRoutes($routes);

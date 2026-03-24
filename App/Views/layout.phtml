@@ -45,11 +45,11 @@
         </div>
         <ul class="menu-lista list-unstyled m-0">
           <li class="menu-item <?= ($this->getActive() == 'index') ? 'bg-primary-subtle border-end border-primary border-4' : '' ?>">
-            <a class="d-block p-3 text-decoration-none <?= ($this->getActive() == 'index') ? 'text-primary fw-bold' : 'text-dark' ?>" href="/home">Home</a>
+            <a class="d-block p-3 btn-ajax text-decoration-none <?= ($this->getActive() == 'index') ? 'text-primary fw-bold' : 'text-dark' ?>" href="/home">Home</a>
           </li>
-          <li class="menu-item <?= ($this->getActive() == 'carrinho') ? 'bg-primary-subtle border-end border-primary border-4' : '' ?>">
-            <a class="d-block p-3 text-decoration-none <?= ($this->getActive() == 'carrinho') ? 'text-primary fw-bold' : 'text-dark' ?>" href="/favoritos">Usuários / Turmas</a>
-          </li>
+          <li class="menu-item <?= ($this->getActive() == 'usuarios') ? 'bg-primary-subtle border-end border-primary border-4' : '' ?>">
+    <a class="d-block p-3 text-decoration-none btn-ajax <?= ($this->getActive() == 'usuarios') ? 'text-primary fw-bold' : 'text-dark' ?>" href="/usuarios">Usuários / Turmas</a>
+</li>
         </ul>
       </div>
     </aside>
@@ -80,10 +80,36 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (btn) {
             e.preventDefault(); // Impede o recarregamento padrão da página
+            
+            let menuItem = btn.closest('.menu-item'); // Verifica se o botão clicado está dentro do menu
+            
+            if (menuItem) {
+                // 1. Remove as classes de 'ativo' de TODOS os itens do menu
+                document.querySelectorAll('.menu-item').forEach(li => {
+                    // Limpa o fundo e a borda da tag <li>
+                    li.classList.remove('bg-primary-subtle', 'border-end', 'border-primary', 'border-4');
+                    
+                    // Limpa a cor do texto da tag <a> e volta para dark
+                    let a = li.querySelector('a');
+                    if (a) {
+                        a.classList.remove('text-primary', 'fw-bold');
+                        a.classList.add('text-dark');
+                    }
+                });
+
+                // 2. Adiciona as classes de 'ativo' SOMENTE no item que foi clicado
+                menuItem.classList.add('bg-primary-subtle', 'border-end', 'border-primary', 'border-4');
+                btn.classList.remove('text-dark');
+                btn.classList.add('text-primary', 'fw-bold');
+            }
             let url = btn.getAttribute('href');
 
-            // Faz a requisição para buscar a página de alunos
-            fetch(url)
+            // Faz a requisição para buscar a página
+            fetch(url, {
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest' 
+    }
+})
                 .then(response => response.text())
                 .then(html => {
                     // Substitui o conteúdo da tag main pelo HTML recebido

@@ -1,0 +1,60 @@
+<div class="secao" id="secao-usuarios">
+  
+  <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+      <h2 class="titulo fs-3 m-0" style="color: var(--cor-primaria, #0d6efd);">Usuários do Sistema</h2>
+      
+      <a href="/perfil/editar" class="btn btn-outline-primary d-flex align-items-center gap-2 btn-ajax">
+          <i class="bi bi-person-gear"></i> Alterar meu perfil
+      </a>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3 mt-4">
+      <h5 class="m-0 text-secondary">Lista de Usuários</h5>
+      
+      <div class="input-group" style="max-width: 300px;">
+          <input type="text" class="form-control" placeholder="Buscar usuário...">
+          <button class="btn btn-outline-secondary" type="button">
+              <i class="bi bi-search"></i>
+          </button>
+      </div>
+  </div>
+
+  <div class="table-responsive rounded shadow-sm border">
+      <table class="table table-hover table-striped align-middle text-center m-0">
+          <thead class="table-light">
+              <tr>
+                  <th>Id</th>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Tipo</th>
+                  <th style="width: 160px;">Ações</th>
+              </tr>
+          </thead>
+          <tbody>
+              <?php if (!empty($this->view->usuarios)): ?>
+                  <?php foreach ($this->view->usuarios as $usuario) : ?>
+                      <tr>
+                        <td><?= htmlspecialchars($usuario['id'] ?? 0); ?></td>
+                          <td><?= htmlspecialchars($usuario['nome'] ?? 'N/A'); ?></td>
+                          <td><?= htmlspecialchars($usuario['email'] ?? 'N/A'); ?></td>
+                          <td>
+                              <span class="badge bg-secondary">
+                                  <?= htmlspecialchars($usuario['tipo'] ?? 'Usuário'); ?>
+                              </span>
+                          </td>
+                          <td>
+                              <a href="/usuario/turmas?id=<?= $usuario['id']; ?>" class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center gap-1 mx-auto text-decoration-none btn-ajax" style="width: fit-content;">
+                                  <i class="bi bi-collection"></i> Turmas
+                              </a>
+                          </td>
+                      </tr>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                  <tr>
+                      <td colspan="4" class="text-muted p-4">Nenhum usuário cadastrado no sistema.</td>
+                  </tr>
+              <?php endif; ?>
+          </tbody>
+      </table>
+  </div>
+</div>

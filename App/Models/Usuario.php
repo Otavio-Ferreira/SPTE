@@ -15,7 +15,7 @@ class Usuario extends Model
 
   public function getAll()
   {
-    $query = "SELECT * FROM Usuario";
+    $query = "SELECT id, nome, email, tipo  FROM Usuario";
     $stmt = $this->db->prepare($query);
     $stmt->execute();
 
