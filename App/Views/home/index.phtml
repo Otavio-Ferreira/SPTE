@@ -1,105 +1,113 @@
 <div class="secao" id="secao-inicio">
-  
-  <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
-      <h2 class="titulo fs-3" style="color: var(--cor-primaria, #0d6efd);">Gerenciar Turmas</h2>
-  </div>
 
-  <div class="card shadow-sm border-0 mb-5">
-      <div class="card-header bg-light border-bottom">
-          <h5 class="m-0 text-secondary">Adicionar nova turma</h5>
-      </div>
-      <div class="card-body">
-          <form method="POST" action="/adicionar/turma" class="row g-3 align-items-center">
-              
-              <div class="col-md-3">
-                  <div class="form-floating">
-                      <input type="text" class="form-control" name="serie" id="inputSerie" placeholder="Série" required>
-                      <label for="inputSerie">Série</label>
-                  </div>
-              </div>
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+        <h2 class="titulo fs-3" style="color: var(--cor-primaria, #0d6efd);">Gerenciar Turmas</h2>
+    </div>
 
-              <div class="col-md-2">
-                  <div class="form-floating">
-                      <input type="text" class="form-control" name="ano" id="inputAno" placeholder="Ano" required>
-                      <label for="inputAno">Ano</label>
-                  </div>
-              </div>
+    <div class="card shadow-sm border-0 mb-5">
+        <div class="card-header bg-light border-bottom">
+            <h5 class="m-0 text-secondary">Adicionar nova turma</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="/adicionar/turma" class="row g-3 align-items-center">
 
-              <div class="col-md-3">
-                  <div class="form-floating">
-                      <select class="form-select" name="turno" id="selectTurno" required>
-                          <option value="" selected disabled>Selecione</option>
-                          <option value="Manhã">Manhã</option>
-                          <option value="Tarde">Tarde</option>
-                          <option value="Integral">Integral</option>
-                          <option value="Noite">Noite</option>
-                      </select>
-                      <label for="selectTurno">Turno</label>
-                  </div>
-              </div>
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="serie" id="inputSerie" placeholder="Série" required>
+                        <label for="inputSerie">Série</label>
+                    </div>
+                </div>
 
-              <div class="col-md-3">
-                  <div class="form-floating">
-                      <select class="form-select" name="id_usuario" id="selectResp" required>
-                          <option value="" selected disabled>Selecione</option>
-                          <?php foreach ($this->view->usuarios as $key => $usuario) :?>
-                              <option value="<?= $usuario['id'] ?>"><?= $usuario['nome'] ?></option>
-                          <?php endforeach; ?>
-                      </select>
-                      <label for="selectResp">Responsável</label>
-                  </div>
-              </div>
+                <div class="col-md-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="ano" id="inputAno" placeholder="Ano" required>
+                        <label for="inputAno">Ano</label>
+                    </div>
+                </div>
 
-              <div class="col-md-1 d-grid">
-                  <button class="btn btn-primary h-100" type="submit" style="background-color: var(--cor-primaria, #0d6efd); border-color: var(--cor-primaria, #0d6efd);">
-                      <i class="bi bi-plus-lg"></i>
-                  </button>
-              </div>
-          </form>
-      </div>
-  </div>
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <select class="form-select" name="turno" id="selectTurno" required>
+                            <option value="" selected disabled>Selecione</option>
+                            <option value="Manhã">Manhã</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Integral">Integral</option>
+                            <option value="Noite">Noite</option>
+                        </select>
+                        <label for="selectTurno">Turno</label>
+                    </div>
+                </div>
 
-  <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="m-0 text-secondary">Lista de Turmas</h5>
-      
-      <div class="input-group" style="max-width: 300px;">
-          <input type="text" class="form-control" placeholder="Buscar turma...">
-          <button class="btn btn-outline-secondary" type="button">
-              <i class="bi bi-search"></i>
-          </button>
-      </div>
-  </div>
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <select class="form-select" name="id_usuario" id="selectResp" required>
+                            <option value="" selected disabled>Selecione</option>
+                            <?php foreach ($this->view->usuarios as $key => $usuario) : ?>
+                                <option value="<?= $usuario['id'] ?>"><?= $usuario['nome'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <label for="selectResp">Responsável</label>
+                    </div>
+                </div>
 
-  <div class="table-responsive rounded shadow-sm border">
-      <table class="table table-hover table-striped align-middle text-center m-0">
-          <thead class="table-light">
-              <tr>
-                  <th>Série</th>
-                  <th>Ano</th>
-                  <th>Turno</th>
-                  <th style="width: 160px;">Ações</th>
-              </tr>
-          </thead>
-          <tbody>
-              <?php foreach ($this->view->turmas as $indice => $item) : ?>
-                  <tr>
-                      <td><?= htmlspecialchars($item['serie']); ?></td>
-                      <td><?= htmlspecialchars($item['ano']); ?></td>
-                      <td><?= htmlspecialchars($item['turno']); ?></td>
-                      <td>
-                          <a href="/turma/alunos?id=<?= $item['id']; ?>" class="btn btn-ajax btn-sm btn-outline-primary d-flex align-items-center gap-1 mx-auto text-decoration-none" style="width: fit-content;">
-        <i class="bi bi-eye"></i> Alunos
-    </a>
-                      </td>
-                  </tr>
-              <?php endforeach; ?>
-              
-              <?php if (empty($this->view->turmas)): ?>
-                  <tr>
-                      <td colspan="4" class="text-muted p-4">Nenhuma turma cadastrada no momento.</td>
-                  </tr>
-              <?php endif; ?>
-          </tbody>
-      </table>
-  </div>
+                <div class="col-md-1 d-grid">
+                    <button class="btn btn-primary h-100" type="submit" style="background-color: var(--cor-primaria, #0d6efd); border-color: var(--cor-primaria, #0d6efd);">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="m-0 text-secondary">Lista de Turmas</h5>
+
+        <form method="GET" action="" style="max-width: 300px;">
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="busca"
+                    class="form-control"
+                    placeholder="Buscar turma..."
+                    value="<?= isset($_GET['busca']) ? htmlspecialchars($_GET['busca']) : '' ?>">
+
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive rounded shadow-sm border">
+        <table class="table table-hover table-striped align-middle text-center m-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Série</th>
+                    <th>Ano</th>
+                    <th>Turno</th>
+                    <th style="width: 160px;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->view->turmas as $indice => $item) : ?>
+                    <tr>
+                        <td><?= htmlspecialchars($item['serie']); ?></td>
+                        <td><?= htmlspecialchars($item['ano']); ?></td>
+                        <td><?= htmlspecialchars($item['turno']); ?></td>
+                        <td>
+                            <a href="/turma/alunos/<?= $item['id']; ?>" class="btn btn-ajax btn-sm btn-outline-primary d-flex align-items-center gap-1 mx-auto text-decoration-none" style="width: fit-content;">
+                                <i class="bi bi-eye"></i> Alunos
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+
+                <?php if (empty($this->view->turmas)): ?>
+                    <tr>
+                        <td colspan="4" class="text-muted p-4">Nenhuma turma cadastrada no momento.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </div>

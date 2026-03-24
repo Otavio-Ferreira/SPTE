@@ -2,17 +2,13 @@
 namespace App\Models;
 use MF\Model\Model;
 
-// 1. O nome da classe deve ser preferencialmente no singular e igual ao nome do arquivo.
 class Media extends Model {
 
-    // 2. É uma boa prática definir os atributos da tabela como propriedades privadas da classe.
     private $id;
     private $id_aluno;
     private $nota;
     private $ano;
     private $semestre;
-
-    // 3. Métodos Mágicos Getters e Setters (Facilitam na hora de salvar os dados)
     public function __get($atributo) {
         return $this->$atributo;
     }

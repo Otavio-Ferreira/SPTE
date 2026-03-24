@@ -100,6 +100,7 @@ CREATE TABLE `Aluno` (
   `id_categoria` bigint UNSIGNED NOT NULL,
   `id_turma` bigint UNSIGNED NOT NULL,
   `nome` varchar(255) NOT NULL,
+  `matricula` varchar(255) NOT NULL,
   `rua` varchar(255) NOT NULL,
   `bairro` varchar(255) NOT NULL,
   `cidade` varchar(255) NOT NULL,
@@ -179,8 +180,8 @@ INSERT INTO Usuario_Turma (id_usuario, id_turma) VALUES
 
 -- Inserindo Alunos
 INSERT INTO Aluno (id_categoria, id_turma, nome, rua, bairro, cidade, estado) VALUES
-(2, 1, 'Carlos Silva', 'Rua das Flores', 'Centro', 'Juazeiro do Norte', 'CE'),
-(1, 1, 'Ana Souza', 'Av. Brasil', 'Lagoa', 'Crato', 'CE');
+(2, 1, 'Carlos Silva', '2024001910', 'Rua das Flores', 'Centro', 'Juazeiro do Norte', 'CE'),
+(1, 1, 'Ana Souza', '2024001911', 'Av. Brasil', 'Lagoa', 'Crato', 'CE');
 
 -- Inserindo o Núcleo Familiar dos Alunos
 INSERT INTO Nucleo_Familiar (id_aluno, ano, parentesco) VALUES

@@ -7,37 +7,34 @@
   <title>SPTE</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="./src/styles/global/global.css" />
-  <link rel="stylesheet" href="./src/styles/login_index/header.css" />
-  
-  
-  <link rel="stylesheet" href="/caminho/para/seus/estilos.css">
+
+  <link rel="stylesheet" href="<?= BASE_URL ?>src/styles/global/global.css" />
+  <link rel="stylesheet" href="<?= BASE_URL ?>src/styles/login_index/header.css" />
 </head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
 
   <header class="cabecalho">
-            <div class="cabecalho-logo-titulo">
-                <div class="logo">
-                    <img
-                        src="/src/assets/images/logo-ufca.png"
-                        alt="Logo da universidade federal do cariri"
-                        height="14"
-                    />
-                </div>
-                <div class="titulos">
-                    <h1>SPTE</h1>
-                    <h2>Sistema de Proteção de Trajetória Escolares</h2>
-                </div>
-            </div>
-            <div class="cabecalho-login d-flex align-items-center gap-3">
-        <span class="fs-6">Bem-vindo(a)</span>
-        <a class="btn btn-light btn-sm fw-bold" href="/sair">Sair</a>
+    <div class="cabecalho-logo-titulo">
+      <div class="logo">
+        <img
+          src="/src/assets/images/logo-ufca.png"
+          alt="Logo da universidade federal do cariri"
+          height="14" />
+      </div>
+      <div class="titulos">
+        <h1>SPTE</h1>
+        <h2>Sistema de Proteção de Trajetória Escolares</h2>
+      </div>
     </div>
-        </header>
+    <div class="cabecalho-login d-flex align-items-center gap-3">
+      <span class="fs-6">Bem-vindo(a)</span>
+      <a class="btn btn-light btn-sm fw-bold" href="/sair">Sair</a>
+    </div>
+  </header>
 
   <div class="container-principal d-flex flex-grow-1 m-3 bg-white border shadow-sm rounded">
-    
+
     <aside class="menu-lateral border-end" style="width: 220px; background-color: var(--cor-fundo-menu, #f8f9fa);">
       <div class="menu-grupo mt-3">
         <div class="menu-categoria text-uppercase text-muted px-3 pb-2 border-bottom" style="font-size: 11px; letter-spacing: 1px;">
@@ -48,8 +45,8 @@
             <a class="d-block p-3 btn-ajax text-decoration-none <?= ($this->getActive() == 'index') ? 'text-primary fw-bold' : 'text-dark' ?>" href="/home">Home</a>
           </li>
           <li class="menu-item <?= ($this->getActive() == 'usuarios') ? 'bg-primary-subtle border-end border-primary border-4' : '' ?>">
-    <a class="d-block p-3 text-decoration-none btn-ajax <?= ($this->getActive() == 'usuarios') ? 'text-primary fw-bold' : 'text-dark' ?>" href="/usuarios">Usuários / Turmas</a>
-</li>
+            <a class="d-block p-3 text-decoration-none btn-ajax <?= ($this->getActive() == 'usuarios') ? 'text-primary fw-bold' : 'text-dark' ?>" href="/usuarios">Usuários</a>
+          </li>
         </ul>
       </div>
     </aside>
@@ -60,7 +57,7 @@
           <?= $_SESSION['msg']['text']; ?>
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <?php unset($_SESSION['msg']);?>
+        <?php unset($_SESSION['msg']); ?>
       <?php endif; ?>
 
       <?php $this->content(); ?>
@@ -69,57 +66,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Usamos delegação de eventos no body para garantir que funcione 
-    // mesmo em elementos que forem adicionados dinamicamente depois
-    document.body.addEventListener('click', function(e) {
-        
-        // Verifica se clicou no botão ou no ícone dentro dele
-        let btn = e.target.closest('.btn-ajax');
-        
-        if (btn) {
-            e.preventDefault(); // Impede o recarregamento padrão da página
-            
-            let menuItem = btn.closest('.menu-item'); // Verifica se o botão clicado está dentro do menu
-            
-            if (menuItem) {
-                // 1. Remove as classes de 'ativo' de TODOS os itens do menu
-                document.querySelectorAll('.menu-item').forEach(li => {
-                    // Limpa o fundo e a borda da tag <li>
-                    li.classList.remove('bg-primary-subtle', 'border-end', 'border-primary', 'border-4');
-                    
-                    // Limpa a cor do texto da tag <a> e volta para dark
-                    let a = li.querySelector('a');
-                    if (a) {
-                        a.classList.remove('text-primary', 'fw-bold');
-                        a.classList.add('text-dark');
-                    }
-                });
-
-                // 2. Adiciona as classes de 'ativo' SOMENTE no item que foi clicado
-                menuItem.classList.add('bg-primary-subtle', 'border-end', 'border-primary', 'border-4');
-                btn.classList.remove('text-dark');
-                btn.classList.add('text-primary', 'fw-bold');
-            }
-            let url = btn.getAttribute('href');
-
-            // Faz a requisição para buscar a página
-            fetch(url, {
-    headers: {
-        'X-Requested-With': 'XMLHttpRequest' 
-    }
-})
-                .then(response => response.text())
-                .then(html => {
-                    // Substitui o conteúdo da tag main pelo HTML recebido
-                    document.getElementById('main-content').innerHTML = html;
-                })
-                .catch(error => console.error('Erro ao carregar a página:', error));
-        }
-    });
-});
-</script>
 </body>
 
 </html>
