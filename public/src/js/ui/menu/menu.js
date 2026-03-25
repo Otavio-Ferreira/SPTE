@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const classesFundoAtivo = ['bg-primary-subtle', 'border-end', 'border-primary', 'border-4'];
 
-    if (urlAtual.includes("/home") && liHome && linkHome) {
+    if (( urlAtual.includes("/home") || urlAtual.includes("/turma") || urlAtual.includes("/aluno")) && liHome && linkHome) {
         liHome.classList.add(...classesFundoAtivo);
         linkHome.classList.remove("text-dark");
         linkHome.classList.add("text-primary", "fw-bold");
