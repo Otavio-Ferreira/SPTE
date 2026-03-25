@@ -86,5 +86,21 @@
             return false; 
         }
     }
+
+    public function getTurmasPorUsuario($id_usuario) 
+    {
+        $query = "
+            SELECT t.id, t.serie, t.ano, t.turno 
+            FROM Turma t
+            INNER JOIN Usuario_Turma ut ON t.id = ut.id_turma
+            WHERE ut.id_usuario = :id_usuario
+        ";
+        
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id_usuario', $id_usuario);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
   }
 ?>

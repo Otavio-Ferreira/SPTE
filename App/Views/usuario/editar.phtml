@@ -1,0 +1,42 @@
+<div class="secao" id="secao-editar-perfil">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+        <h2 class="titulo fs-3 m-0" style="color: var(--cor-primaria, #0d6efd);">Alterar meu perfil</h2>
+        <a href="/usuarios" class="btn btn-outline-secondary d-flex align-items-center gap-2 btn-ajax">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <form action="/perfil/salvar" method="POST">
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="nome" class="form-label text-secondary">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" value="<?= htmlspecialchars($this->view->usuario_edit['nome'] ?? '') ?>" required>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="email" class="form-label text-secondary">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($this->view->usuario_edit['email'] ?? '') ?>" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="senha" class="form-label text-secondary">Nova Senha</label>
+                        <input type="password" class="form-control" id="senha" name="senha" placeholder="Deixe em branco para não alterar a senha atual">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary d-flex align-items-center gap-2">
+                        <i class="bi bi-save"></i> Salvar Alterações
+                    </button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>

@@ -42,4 +42,32 @@ class Usuario extends Model
 
     return $stmt->fetchAll();
   }
+
+  public function getById($id)
+    {
+        $query = "SELECT id, nome, email, tipo FROM Usuario WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function atualizarPerfil($id, $nome, $email, $senha = null)
+    {
+        if (!empty($senha)) {
+            $query = "UPDATE Usuario SET nome = :nome, email = :email, senha = :senha WHERE id = :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':senha', $senha);
+        } else {
+            $query = "UPDATE Usuario SET nome = :nome, email = :email WHERE id = :id";
+            $stmt = $this->db->prepare($query);
+        }
+
+        $stmt->bindValue(':nome', $nome);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':id', $id);
+        
+        return $stmt->execute();
+    }
 }

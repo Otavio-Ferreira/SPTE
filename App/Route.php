@@ -71,6 +71,27 @@ class Route extends Bootstrap
       'auth' => true
     );
 
+    $routes['perfil_editar'] = array(
+      'route' => '/perfil/editar',
+      'controller' => 'UsuarioController',
+      'action' => 'editar',
+      'auth' => true
+    );
+
+    $routes['perfil_salvar'] = array(
+      'route' => '/perfil/salvar',
+      'controller' => 'UsuarioController',
+      'action' => 'salvarPerfil',
+      'auth' => true
+    );
+
+    $routes['usuario_turmas'] = array(
+      'route' => '/usuario/turmas',
+      'controller' => 'UsuarioController',
+      'action' => 'turmas',
+      'auth' => true
+    );
+
     $this->setRoutes($routes);
   }
 }
