@@ -28,10 +28,8 @@
 
 .cabecalho-login {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: flex-end;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 15px;
     border-radius: 5px;
 }
 
