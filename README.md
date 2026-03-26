@@ -252,35 +252,45 @@ INSERT INTO Aluno (id_turma, nome, matricula, rua, bairro, cidade, estado, id_ca
 ## Script de Consultas permitidas e parametrizadas
 
 ```sql
--- Consulta da turma de um usuário específico
--- Parâmetro: Id do usuário
-SELECT t.id, t.serie, t.ano, t.turno 
-            FROM Turma t
-            INNER JOIN Usuario_Turma ut ON t.id = ut.id_turma
-            WHERE ut.id_usuario = :id_usuario;
+-- Verificando login
+SELECT * FROM Usuario WHERE email = :email AND senha = :senha;
 
--- Consulta de um usuário por seu email
-SELECT * FROM Usuario WHERE email = :email;
+-- Tela inicial
+-- Turmas de um usuário
+SELECT t.* FROM Turma t
+   INNER JOIN Usuario_Turma ut ON t.id = ut.id_turma
+   WHERE ut.id_usuario = :id_usuario;
 
--- Consulta de uma aluno específico
--- Esta consulta traz todas as informações da tabela aluno, o nome de sua categoria, a sua série e o ano
+-- Busca pela serie, ano ou turno
+SELECT t.* FROM Turma t
+   INNER JOIN Usuario_Turma ut ON t.id = ut.id_turma
+   WHERE ut.id_usuario = :id_usuario
+      AND (t.serie LIKE :busca_serie OR t.ano LIKE :busca_ano OR t.turno LIKE :busca_turno);
+
+-- Buscar alunos de uma turma
+SELECT * FROM Aluno WHERE id_turma = :id_turma;
+
+-- Buscar pelo nome
+SELECT * FROM Aluno WHERE id_turma = :id_turma AND (nome LIKE :busca_nome);
+
+-- Dados de um aluno
 SELECT A.*, C.nome as nome_categoria, T.serie as serie_turma, T.ano as ano_turma, T.turno as turno_turma FROM
             Aluno A
             INNER JOIN Categoria_Renda C ON A.id_categoria = C.id
             INNER JOIN Turma T ON A.id_turma = T.id
             WHERE A.id = :id_aluno;
 
--- Consulta da frequência do aluno
--- Parâmetro id do aluno
+-- Frequência do aluno
 SELECT id_turma, id_calendario, assiduidade, C.* FROM
             Frequencia F
             INNER JOIN Calendario_Mes C ON C.id = F.id_calendario
             WHERE id_aluno = :id_aluno;
 
--- Consulta da média do aluno
--- Parâmetro id do aluno
+-- Média do aluno
 SELECT nota, ano, semestre FROM Media WHERE id_aluno = :id_aluno;
 
+-- Todos os usuários
+SELECT id, nome, email, tipo  FROM Usuario;
 ```
 
 ## Script de Atualização
