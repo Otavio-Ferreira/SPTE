@@ -7,89 +7,98 @@
         <h2 class="titulo fs-3 m-0" style="color: var(--cor-primaria, #0d6efd);">Gerenciar Alunos</h2>
     </div>
 
-    <div class="card shadow-sm border-0 mb-5">
-        <div class="card-header bg-light border-bottom">
-            <h5 class="m-0 text-secondary">Adicionar novo aluno à turma</h5>
-        </div>
-        <div class="card-body">
-            <form method="POST" action="/adicionar/aluno/<?= $this->view->turma['id'] ?>" class="row g-3 align-items-center">
-
-                <div class="col-md-6">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="nome" id="inputNome" placeholder="Nome do Aluno" required>
-                        <label for="inputNome">Nome do Aluno</label>
+    <div class="">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <form method="POST" action="/adicionar/aluno/<?= $this->view->turma['id'] ?>" class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar aluno</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="matricula" id="inputMatricula" placeholder="Matrícula" required>
-                        <label for="inputMatricula">Matrícula</label>
+                    <div class="modal-body row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="nome" id="inputNome" placeholder="Nome do Aluno" required>
+                                <label for="inputNome">Nome do Aluno</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="matricula" id="inputMatricula" placeholder="Matrícula" required>
+                                <label for="inputMatricula">Matrícula</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" name="id_categoria" id="selectResp" required>
+                                    <option value="" selected disabled>Selecione</option>
+                                    <?php foreach ($this->view->categorias as $key => $categoria) : ?>
+                                        <option value="<?= $categoria['id'] ?>"><?= $categoria['nome'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <label for="selectResp">Categoria de renda</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="rua" id="inputRua" placeholder="Rua" required>
+                                <label for="inputRua">Rua</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="bairro" id="inputBairro" placeholder="Bairro" required>
+                                <label for="inputBairro">Bairro</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="cidade" id="inputCidade" placeholder="Cidade" required>
+                                <label for="inputCidade">Cidade</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="estado" id="inputEstado" placeholder="Estado" required>
+                                <label for="inputEstado">Estado</label>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="rua" id="inputRua" placeholder="Rua" required>
-                        <label for="inputRua">Rua</label>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button class="btn btn-success h-100 rounded-3 shadow-sm" type="submit">
+                            Salvar
+                        </button>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="bairro" id="inputBairro" placeholder="Bairro" required>
-                        <label for="inputBairro">Bairro</label>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="cidade" id="inputCidade" placeholder="Cidade" required>
-                        <label for="inputCidade">Cidade</label>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="estado" id="inputEstado" placeholder="Estado" required>
-                        <label for="inputEstado">Estado</label>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-floating">
-                        <select class="form-select" name="id_categoria" id="selectResp" required>
-                            <option value="" selected disabled>Selecione</option>
-                            <?php foreach ($this->view->categorias as $key => $categoria) : ?>
-                                <option value="<?= $categoria['id'] ?>"><?= $categoria['nome'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <label for="selectResp">Categoria de renda</label>
-                    </div>
-                </div>
-
-                <div class="col-md-3 d-grid">
-                    <button class="btn btn-primary h-100 rounded-3 shadow-sm fw-bold" type="submit" style="background-color: var(--cor-primaria, #0d6efd); border-color: var(--cor-primaria, #0d6efd); min-height: 58px;">
-                        <i class="bi bi-plus-lg fs-5 me-1"></i> Adicionar Aluno
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="m-0 text-secondary">Lista de Alunos da Turma</h5>
 
-        <form method="GET" action="" style="max-width: 300px;">
-            <div class="input-group">
-                <input
-                    type="text"
-                    name="busca"
-                    class="form-control"
-                    placeholder="Buscar aluno..."
-                    value="<?= isset($_GET['busca']) ? htmlspecialchars($_GET['busca']) : '' ?>">
+        <div class="d-flex gap-1">
 
-                <button class="btn btn-outline-secondary" type="submit">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-        </form>
+            <form method="GET" action="" style="max-width: 300px;">
+                <div class="input-group">
+                    <input
+                        type="text"
+                        name="busca"
+                        class="form-control"
+                        placeholder="Buscar aluno..."
+                        value="<?= isset($_GET['busca']) ? htmlspecialchars($_GET['busca']) : '' ?>">
+
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+            <button type="button" class="btn text-white" style="background-color: var(--cor-primaria, #0d6efd); border-color: var(--cor-primaria, #0d6efd)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="bi bi-plus"></i>
+                Adicionar
+            </button>
+        </div>
     </div>
 
     <div class="table-responsive rounded shadow-sm border">

@@ -11,13 +11,6 @@
       <?php 
         $risco = $this->view->risco;
         $corRisco = $this->view->cor;
-        // if(strpos(strtolower($this->view->aluno['nome_categoria']), 'baixa') !== false) {
-        //     $risco = 'Alto';
-        //     $corRisco = 'bg-danger';
-        // } elseif (strpos(strtolower($this->view->aluno['nome_categoria']), 'média') !== false) {
-        //     $risco = 'Médio';
-        //     $corRisco = 'bg-warning text-dark';
-        // }
       ?>
       <span class="badge <?= $corRisco ?> fs-6 p-2 px-3 shadow-sm rounded-pill">
           <i class="bi bi-shield-exclamation me-1"></i> Risco de Evasão: <?= $risco ?>

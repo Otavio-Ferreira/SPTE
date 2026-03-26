@@ -4,99 +4,111 @@
         <h2 class="titulo fs-3" style="color: var(--cor-primaria, #0d6efd);">Gerenciar Turmas</h2>
     </div>
 
-    <div class="card shadow-sm border-0 mb-5">
-        <div class="card-header bg-light border-bottom">
-            <h5 class="m-0 text-secondary">Adicionar nova turma</h5>
-        </div>
-        <div class="card-body">
-            <form method="POST" action="/adicionar/turma" class="row g-3 align-items-center">
-
-                <div class="col-md-3">
-                    <div class="form-floating">
-                        <select class="form-select" name="serie" id="selectSerie" required>
-                            <option value="" selected disabled>Selecione</option>
-
-                            <optgroup label="Ensino Fundamental I">
-                                <option value="1">1º Ano</option>
-                                <option value="2">2º Ano</option>
-                                <option value="3">3º Ano</option>
-                                <option value="3">4º Ano</option>
-                                <option value="3">5º Ano</option>
-                            </optgroup>
-                            <optgroup label="Ensino Fundamental II">
-                                <option value="6">6º Ano</option>
-                                <option value="7">7º Ano</option>
-                                <option value="8">8º Ano</option>
-                                <option value="9">9º Ano</option>
-                            </optgroup>
-                        </select>
-                        <label for="selectSerie">Série</label>
+    <div class="">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <form method="POST" action="/adicionar/turma" class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar turma</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
+                    <div class="modal-body row">
 
-                <div class="col-md-2">
-                    <div class="form-floating">
-                        <select class="form-select" name="ano" id="selectAno" required>
-                            <option value="" selected disabled>Selecione</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                        </select>
-                        <label for="selectAno">Ano</label>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" name="serie" id="selectSerie" required>
+                                    <option value="" selected disabled>Selecione</option>
+
+                                    <optgroup label="Ensino Fundamental I">
+                                        <option value="1">1º Ano</option>
+                                        <option value="2">2º Ano</option>
+                                        <option value="3">3º Ano</option>
+                                        <option value="3">4º Ano</option>
+                                        <option value="3">5º Ano</option>
+                                    </optgroup>
+                                    <optgroup label="Ensino Fundamental II">
+                                        <option value="6">6º Ano</option>
+                                        <option value="7">7º Ano</option>
+                                        <option value="8">8º Ano</option>
+                                        <option value="9">9º Ano</option>
+                                    </optgroup>
+                                </select>
+                                <label for="selectSerie">Série</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" name="ano" id="selectAno" required>
+                                    <option value="" selected disabled>Selecione</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                                <label for="selectAno">Ano</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" name="turno" id="selectTurno" required>
+                                    <option value="" selected disabled>Selecione</option>
+                                    <option value="Manhã">Manhã</option>
+                                    <option value="Tarde">Tarde</option>
+                                    <option value="Integral">Integral</option>
+                                    <option value="Noite">Noite</option>
+                                </select>
+                                <label for="selectTurno">Turno</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" name="id_usuario" id="selectResp" required>
+                                    <option value="" selected disabled>Selecione</option>
+                                    <?php foreach ($this->view->usuarios as $key => $usuario) : ?>
+                                        <option value="<?= $usuario['id'] ?>"><?= $usuario['nome'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <label for="selectResp">Responsável</label>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-floating">
-                        <select class="form-select" name="turno" id="selectTurno" required>
-                            <option value="" selected disabled>Selecione</option>
-                            <option value="Manhã">Manhã</option>
-                            <option value="Tarde">Tarde</option>
-                            <option value="Integral">Integral</option>
-                            <option value="Noite">Noite</option>
-                        </select>
-                        <label for="selectTurno">Turno</label>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button class="btn btn-success h-100 rounded-3 shadow-sm" type="submit">
+                            Salvar
+                        </button>
                     </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-floating">
-                        <select class="form-select" name="id_usuario" id="selectResp" required>
-                            <option value="" selected disabled>Selecione</option>
-                            <?php foreach ($this->view->usuarios as $key => $usuario) : ?>
-                                <option value="<?= $usuario['id'] ?>"><?= $usuario['nome'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <label for="selectResp">Responsável</label>
-                    </div>
-                </div>
-
-                <div class="col-md-1 d-grid">
-                    <button class="btn btn-primary h-100 rounded-3 shadow-sm" type="submit" style="background-color: var(--cor-primaria, #0d6efd); border-color: var(--cor-primaria, #0d6efd); min-height: 58px;">
-                        <i class="bi bi-plus-lg fs-5"></i>
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="m-0 text-secondary">Lista de Turmas</h5>
 
-        <form method="GET" action="" style="max-width: 300px;">
-            <div class="input-group">
-                <input
-                    type="text"
-                    name="busca"
-                    class="form-control"
-                    placeholder="Buscar turma..."
-                    value="<?= isset($_GET['busca']) ? htmlspecialchars($_GET['busca']) : '' ?>">
+        <div class="d-flex gap-1">
+            <form method="GET" action="" style="max-width: 300px;">
+                <div class="input-group">
+                    <input
+                        type="text"
+                        name="busca"
+                        class="form-control"
+                        placeholder="Buscar turma..."
+                        value="<?= isset($_GET['busca']) ? htmlspecialchars($_GET['busca']) : '' ?>">
 
-                <button class="btn btn-outline-secondary" type="submit">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-        </form>
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <button type="button" class="btn text-white" style="background-color: var(--cor-primaria, #0d6efd); border-color: var(--cor-primaria, #0d6efd)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="bi bi-plus"></i>
+                Adicionar
+            </button>
+        </div>
     </div>
 
     <div class="table-responsive rounded shadow-sm border">
