@@ -56,31 +56,32 @@ class AlunoController extends Action
         header('Location: /turma/alunos/' . $id);
     }
 
-    private function calcularRiscoEvasao($nota, $frequencia, $categoria) {
-    $notaNorm = $nota / 10; 
-    $freqNorm = $frequencia / 100;
-    $categoriaStr = strtolower($categoria);
-    if (strpos($categoriaStr, 'alta') !== false) {
-        $c = [-0.68524, 0.71897, 0.95468, 0.5277, -0.40559];
+    private function calcularRiscoEvasao($nota, $frequencia, $categoria)
+    {
+        $notaNorm = $nota / 10;
+        $freqNorm = $frequencia / 100;
+        $categoriaStr = strtolower($categoria);
+        if (strpos($categoriaStr, 'alta') !== false) {
+            $c = [-0.68524, 0.71897, 0.95468, 0.5277, -0.40559];
         } elseif (strpos($categoriaStr, 'média') !== false || strpos($categoriaStr, 'media') !== false) {
             $c = [-0.0715066751, 0.6427844882, 1.003045137, 0.05721551176, -0.2383343929];
-            } else {
-                $c = [-0.4073363001, 0.8076287349, 1.078414918, -0.04895104895, -0.4886628523];
-                }
-                
-                $chance = $c[0] + ($c[1] * $freqNorm) + ($c[2] * $notaNorm) + ($c[3] * pow($freqNorm, 2)) + ($c[4] * pow($notaNorm, 2));
-                
-                $chance = max(0, min(1, $chance));
-    $indiceRisco = 1 - $chance;
+        } else {
+            $c = [-0.4073363001, 0.8076287349, 1.078414918, -0.04895104895, -0.4886628523];
+        }
 
-    if ($indiceRisco >= 0.6) {
-        return ['risco' => 'Alto', 'cor' => 'bg-danger'];
-    } elseif ($indiceRisco >= 0.3) {
-        return ['risco' => 'Médio', 'cor' => 'bg-warning text-dark'];
-    } else {
-        return ['risco' => 'Baixo', 'cor' => 'bg-success'];
+        $chance = $c[0] + ($c[1] * $freqNorm) + ($c[2] * $notaNorm) + ($c[3] * pow($freqNorm, 2)) + ($c[4] * pow($notaNorm, 2));
+
+        $chance = max(0, min(1, $chance));
+        $indiceRisco = 1 - $chance;
+
+        if ($indiceRisco >= 0.6) {
+            return ['risco' => 'Alto', 'cor' => 'bg-danger'];
+        } elseif ($indiceRisco >= 0.3) {
+            return ['risco' => 'Médio', 'cor' => 'bg-warning text-dark'];
+        } else {
+            return ['risco' => 'Baixo', 'cor' => 'bg-success'];
+        }
     }
-}
 
     public function show($id)
     {
@@ -96,7 +97,11 @@ class AlunoController extends Action
         $this->view->aluno = $aluno;
         $this->view->frequencias = $frequencias;
         $this->view->medias = $medias;
-        $riscoCalculado = $this->calcularRiscoEvasao($medias[0]['nota'], $frequencias[0]['assiduidade'], $aluno["nome_categoria"]);
+        if (isset($medias[0]['nota']) && isset($frequencias[0]['assiduidade'])) {
+            $riscoCalculado = $this->calcularRiscoEvasao($medias[0]['nota'], $frequencias[0]['assiduidade'], $aluno["nome_categoria"]);
+        } else {
+            $riscoCalculado = ['risco' => 'Nenhum', 'cor' => 'bg-secondary'];
+        }
         $this->view->risco = $riscoCalculado["risco"];
         $this->view->cor = $riscoCalculado["cor"];
         $this->render("historico", "layout");
