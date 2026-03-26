@@ -200,7 +200,7 @@ INSERT INTO Media (id_aluno, nota, ano, semestre) VALUES
 
 ```
 
-## Scritp de Consultas
+## Script de Consultas
 
 ```sql
 -- Listar os Alunos, as suas Turmas e a Categoria de Renda
@@ -231,6 +231,36 @@ SELECT
     N.ano AS Ano_Registo
 FROM Nucleo_Familiar N
 JOIN Aluno A ON N.id_aluno = A.id;
+
+```
+
+## Script de Inserção no sistema 
+
+```sql
+-- Inserir nova turma
+INSERT INTO Turma (ano, serie, turno) VALUES (:ano, :serie, :turno);
+
+-- Inserir Aluno em uma turma
+INSERT INTO Aluno (id_turma, nome, matricula, rua, bairro, cidade, estado, id_categoria) VALUES (:id_turma, :nome, :matricula, :rua, :bairro, :cidade, :estado, :id_categoria);
+
+-- Relacionar Usuário a uma turma
+
+```
+
+## Script de Consultas permitidas e parametrizadas
+
+```sql
+-- Consulta de uma aluno específico
+-- Esta consulta traz todas as informações da tabela aluno, o nome de sua categoria, a sua série e o ano
+SELECT A.*, C.nome as nome_categoria, T.serie as serie_turma, T.ano as ano_turma, T.turno as turno_turma FROM Aluno A INNER JOIN Categoria_Renda C ON A.id_categoria = C.id INNER JOIN Turma T ON A.id_turma = T.id WHERE A.id = :id_aluno;
+
+-- Consulta da frequência do aluno
+-- Parâmetro id do aluno
+SELECT id_turma, id_calendario, assiduidade, C.* FROM Frequencia F INNER JOIN Calendario_Mes C ON C.id = F.id_calendario  WHERE id_aluno = :id_aluno;
+
+-- Consulta da média do aluno
+-- Parâmetro id do aluno
+SELECT nota, ano, semestre FROM Media WHERE id_aluno = :id_aluno;
 
 ```
 para rodar: baixar docker e docker compose
