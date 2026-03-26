@@ -114,7 +114,7 @@
                 <?php if (!empty($this->view->alunos)): ?>
                     <?php foreach ($this->view->alunos as $aluno) : ?>
                         <tr>
-                            <td><?= htmlspecialchars($aluno['id']); ?></td>
+                            <td><?= htmlspecialchars($aluno['matricula']); ?></td>
                             <td><?= htmlspecialchars($aluno['nome']); ?></td>
                             <td>
                                 <a href="/aluno/<?= $aluno['id'] ?>" class="btn btn-sm text-primary fw-bold d-flex align-items-center justify-content-center gap-1 mx-auto text-decoration-none" style="background-color: rgba(13, 110, 253, 0.1); border-radius: 8px; width: 100px;">

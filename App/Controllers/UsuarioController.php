@@ -21,18 +21,17 @@ class UsuarioController extends Action
   }
 
   public function editar()
-  {
-      $id_usuario = $_SESSION['id'] ?? 1;
-
+  {   
       $usuarioModel = Container::getModel('Usuario');
-      $this->view->usuario_edit = $usuarioModel->getById($id_usuario);
+      $this->view->usuario_edit = $usuarioModel->getByEmail($_SESSION['usuario']);
 
       $this->render("editar", "layout");
   }
 
   public function salvarPerfil()
   {
-      $id_usuario = $_SESSION['id'] ?? 1;
+      $usuarioModel = Container::getModel('Usuario');
+      $id_usuario = $usuarioModel->getByEmail($_SESSION['usuario'])['id'];
 
       $nome = $_POST['nome'] ?? '';
       $email = $_POST['email'] ?? '';
