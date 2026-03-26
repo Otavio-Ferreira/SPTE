@@ -9,15 +9,15 @@
       </div>
       
       <?php 
-        $risco = 'Baixo';
-        $corRisco = 'bg-success';
-        if(strpos(strtolower($this->view->aluno['nome_categoria']), 'baixa') !== false) {
-            $risco = 'Alto';
-            $corRisco = 'bg-danger';
-        } elseif (strpos(strtolower($this->view->aluno['nome_categoria']), 'média') !== false) {
-            $risco = 'Médio';
-            $corRisco = 'bg-warning text-dark';
-        }
+        $risco = $this->view->risco;
+        $corRisco = $this->view->cor;
+        // if(strpos(strtolower($this->view->aluno['nome_categoria']), 'baixa') !== false) {
+        //     $risco = 'Alto';
+        //     $corRisco = 'bg-danger';
+        // } elseif (strpos(strtolower($this->view->aluno['nome_categoria']), 'média') !== false) {
+        //     $risco = 'Médio';
+        //     $corRisco = 'bg-warning text-dark';
+        // }
       ?>
       <span class="badge <?= $corRisco ?> fs-6 p-2 px-3 shadow-sm rounded-pill">
           <i class="bi bi-shield-exclamation me-1"></i> Risco de Evasão: <?= $risco ?>
@@ -37,7 +37,7 @@
               </div>
               <div class="col-md-3">
                   <span class="d-block text-muted small text-uppercase fw-bold">Matrícula</span>
-                  <span class="fs-5 text-dark"><?= htmlspecialchars($this->view->aluno['matricula'] ?? 'N/A'); ?></span>
+                  <span class="fs-5 text-dark"><?= htmlspecialchars($this->view->aluno['id'] ?? 'N/A'); ?></span>
               </div>
               <div class="col-md-3">
                   <span class="d-block text-muted small text-uppercase fw-bold">Turma</span>

@@ -96,8 +96,8 @@
         <table class="table table-hover table-striped align-middle text-center m-0">
             <thead class="table-light">
                 <tr>
-                    <th>Nome</th>
                     <th>Matrícula</th>
+                    <th>Nome</th>
                     <th style="width: 160px;">Detalhes</th>
                 </tr>
             </thead>
@@ -105,8 +105,8 @@
                 <?php if (!empty($this->view->alunos)): ?>
                     <?php foreach ($this->view->alunos as $aluno) : ?>
                         <tr>
+                            <td><?= htmlspecialchars($aluno['id']); ?></td>
                             <td><?= htmlspecialchars($aluno['nome']); ?></td>
-                            <td><?= htmlspecialchars($aluno['matricula']); ?></td>
                             <td>
                                 <a href="/aluno/<?= $aluno['id'] ?>" class="btn btn-sm text-primary fw-bold d-flex align-items-center justify-content-center gap-1 mx-auto text-decoration-none" style="background-color: rgba(13, 110, 253, 0.1); border-radius: 8px; width: 100px;">
                                     <i class="bi bi-person-lines-fill"></i> Detalhes
