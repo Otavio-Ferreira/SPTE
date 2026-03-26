@@ -5,37 +5,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SPTE</title>
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="/src/styles/global/global.css" />
+  <link rel="stylesheet" href="/src/styles/login_index/header.css" />
+
+
 </head>
 
-<body>
-  <header class="bg-primary-subtle p-2">
-    <ul class="nav nav-pills justify-content-end">
-      <li class='nav-item'>
-        <a class='nav-link fw-bold <?= ($this->getActive() == "index") ? 'active text-white': 'text-dark'?>' aria-current='page' href='/home'>Home</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link fw-bold <?= ($this->getActive() == "carrinho") ? 'active text-white': 'text-dark'?>' href='/favoritos'>Usuários</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link fw-bold text-dark' href='/sair'>Sair</a>
-      </li>
-    </ul>
+<body class="bg-light d-flex flex-column min-vh-100">
+
+  <header class="cabecalho">
+    <div class="cabecalho-logo-titulo">
+      <div class="logo">
+        <img
+          src="/src/assets/images/logo-ufca.png"
+          alt="Logo da universidade federal do cariri"
+          height="14px" />
+      </div>
+      <div class="titulos" style="display: flex; flex-direction: column; justify-content: center; ">
+            <h1 style="font-size: 32px;">SPTE</h1>
+            <h2 style="font-size: 24px;">Sistema de Proteção de Trajetória Escolares</h2>
+      </div>
+    </div>
+    <div class="cabecalho-login d-flex align-items-center gap-3">
+      <span class="fs-6">Bem-vindo(a)</span>
+      <a class="btn btn-light btn-sm fw-bold" href="/sair">Sair</a>
+    </div>
   </header>
-  <!-- msg de error -->
-   <?php if (isset($_SESSION['msg'])) : ?>
-        <div class="alert alert-<?= $_SESSION['msg']['type']; ?> text-center" role="alert">
-          <?= $_SESSION['msg']['text']; ?>
+
+  <div class="container-principal d-flex flex-grow-1 m-3 bg-white border shadow-sm rounded">
+
+    <aside class="menu-lateral border-end" style="width: 220px; background-color: var(--cor-fundo-menu, #f8f9fa);">
+      <div class="menu-grupo mt-3">
+        <div class="menu-categoria text-uppercase text-muted px-3 pb-2 border-bottom" style="font-size: 13px; letter-spacing: 1px;">
+          Navegação
         </div>
-        <?php unset($_SESSION['msg']);?>
+        <ul class="menu-lista list-unstyled m-0" id="lista-navegacao">
+          
+          <li class="menu-item" id="li-home">
+            <a id="link-home" class="d-flex align-items-center gap-2 p-3 text-decoration-none text-dark nav-link-custom" href="/home">
+              <i class="bi bi-house-door fs-5"></i>
+              Home
+            </a>
+          </li>
+          
+          <li class="menu-item" id="li-usuarios">
+            <a id="link-usuarios" class="d-flex align-items-center gap-2 p-3 text-decoration-none text-dark nav-link-custom" href="/usuarios">
+              <i class="bi bi-people fs-5"></i>
+              Usuários
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </aside>
+
+    <main id="main-content" class="conteudo flex-grow-1 p-4">
+      <?php if (isset($_SESSION['msg'])) : ?>
+        <div class="alert alert-<?= $_SESSION['msg']['type']; ?> alert-dismissible fade show text-center" role="alert">
+          <?= $_SESSION['msg']['text']; ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <?php unset($_SESSION['msg']); ?>
       <?php endif; ?>
-  <main class="p-5">
-    <?php
-    $this->content();
-    ?>
-  </main>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+
+      <?php $this->content(); ?>
+    </main>
+
+  </div>
+
+ <script src="/src/js/ui/menu/menu.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -3,9 +3,9 @@
 Repositório destinado à implementação e consolidação do projeto de banco de dados para a disciplina de Banco de Dados. O objetivo desta etapa é aplicar o esquema relacional (3FN) em um SGBD, garantindo as regras de negócio e a integridade dos dados. Equipe:
 
 * Otavio da Silva Ferreira
-*
-*
-*
+* Bruno da Silva Macedo
+* Kayky Moreira Morais
+* Rafael da Silva Sousa
 
 ## Modelagem Física (DDL)
 
@@ -100,6 +100,7 @@ CREATE TABLE `Aluno` (
   `id_categoria` bigint UNSIGNED NOT NULL,
   `id_turma` bigint UNSIGNED NOT NULL,
   `nome` varchar(255) NOT NULL,
+  `matricula` varchar(255) NOT NULL,
   `rua` varchar(255) NOT NULL,
   `bairro` varchar(255) NOT NULL,
   `cidade` varchar(255) NOT NULL,
@@ -112,11 +113,11 @@ CREATE TABLE `Aluno` (
 
 CREATE TABLE `Nucleo_Familiar` (
   `id` bigint UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `id_usuario` bigint UNSIGNED NOT NULL,
+  `id_aluno` bigint UNSIGNED NOT NULL,
   `ano` varchar(255) NOT NULL,
   `parentesco` varchar(255) NOT NULL,
   CONSTRAINT `nucleo_familiar_id_usuario_foreign` 
-    FOREIGN KEY (`id_usuario`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE
+    FOREIGN KEY (`id_aluno`) REFERENCES `Aluno` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `Frequencia` (
@@ -140,9 +141,156 @@ CREATE TABLE `Media` (
   CONSTRAINT `media_id_aluno_foreign` 
     FOREIGN KEY (`id_aluno`) REFERENCES `Aluno` (`id`) ON DELETE CASCADE
 );
+```
 
+## Script de Povoamento do Banco
 
+```sql
 
+-- Inserindo Categorias de Renda
+INSERT INTO Categoria_Renda (nome, maximo, minimo) VALUES
+('Classe E (Classe Baixa)', 600.00, 0.00),
+('Classe D (Classe Média)', 2000.00, 601.00),
+('Classe C (Classe Alta)', 10000.00, 2001.00);
+
+-- Inserindo Usuários do Sistema
+INSERT INTO Usuario (nome, email, senha, tipo) VALUES
+('Roberto Mendes', 'roberto@escola.com', 'hash_123', 'PROFESSOR'),
+('Julia Lima', 'julia@escola.com', 'hash_123', 'COORDENADOR'),
+('Mônica Silva', 'monica@escola.com', 'hash_123', 'DIRETOR');
+
+-- Inserindo Calendário Letivo
+INSERT INTO Calendario_Mes (mes, ano, total_aulas_prevista) VALUES
+(2, 2024, 20),
+(3, 2024, 22);
+
+-- Inserindo Critérios de Frequência (Ex: Alerta abaixo de 75%)
+INSERT INTO Criterio_Frequencia (maximo, minimo, valor) VALUES
+(100.00, 75.00, 75.00);
+
+-- Inserindo Turmas
+INSERT INTO Turma (serie, ano, turno) VALUES
+(9, 2024, 'Matutino'),
+(1, 2024, 'Vespertino');
+
+-- Vinculando Usuários às Turmas (Tabela Associativa N:N)
+INSERT INTO Usuario_Turma (id_usuario, id_turma) VALUES
+(1, 1),
+(1, 2);
+
+-- Inserindo Alunos
+INSERT INTO Aluno (id_categoria, id_turma, nome, rua, bairro, cidade, estado) VALUES
+(2, 1, 'Carlos Silva', '2024001910', 'Rua das Flores', 'Centro', 'Juazeiro do Norte', 'CE'),
+(1, 1, 'Ana Souza', '2024001911', 'Av. Brasil', 'Lagoa', 'Crato', 'CE');
+
+-- Inserindo o Núcleo Familiar dos Alunos
+INSERT INTO Nucleo_Familiar (id_aluno, ano, parentesco) VALUES
+(1, '2024', 'Mãe'),
+(2, '2024', 'Avó');
+
+-- Inserindo Frequência Diária
+INSERT INTO Frequencia (id_aluno, id_turma, id_calendario, assiduidade) VALUES
+(1, 1, 1, 19.0),
+(2, 1, 1, 12.0);
+
+-- Inserindo Médias Acadêmicas
+INSERT INTO Media (id_aluno, nota, ano, semestre) VALUES
+(1, 8.5, '2024', '1'),
+(2, 4.5, '2024', '1');
+
+```
+
+## Script de Consultas
+
+```sql
+-- Listar os Alunos, as suas Turmas e a Categoria de Renda
+SELECT 
+    A.nome AS Aluno, 
+    T.serie AS Ano_Escolar, 
+    T.turno AS Turno, 
+    C.nome AS Categoria_Socioeconomica
+FROM Aluno A
+JOIN Turma T ON A.id_turma = T.id
+JOIN Categoria_Renda C ON A.id_categoria = C.id;
+
+-- Consultar as Notas de uma Turma Específica
+SELECT 
+    A.nome AS Aluno, 
+    M.nota AS Media_Final, 
+    M.semestre AS Semestre
+FROM Media M
+JOIN Aluno A ON M.id_aluno = A.id
+JOIN Turma T ON A.id_turma = T.id
+WHERE T.serie = 3;
+
+-- Consultar o Núcleo Familiar do Aluno
+
+SELECT 
+    A.nome AS Aluno, 
+    N.parentesco AS Responsavel, 
+    N.ano AS Ano_Registo
+FROM Nucleo_Familiar N
+JOIN Aluno A ON N.id_aluno = A.id;
+
+```
+
+## Script de Inserção no sistema 
+
+```sql
+-- Inserir nova turma
+INSERT INTO Turma (ano, serie, turno) VALUES (:ano, :serie, :turno);
+
+-- Relacionar Usuário a uma turma
+INSERT INTO Usuario_Turma (id_usuario, id_turma) VALUES (:id_usuario, :id_turma);
+
+-- Inserir Aluno em uma turma
+INSERT INTO Aluno (id_turma, nome, matricula, rua, bairro, cidade, estado, id_categoria)
+   VALUES (:id_turma, :nome, :matricula, :rua, :bairro, :cidade, :estado, :id_categoria);
+
+```
+
+## Script de Consultas permitidas e parametrizadas
+
+```sql
+-- Consulta da turma de um usuário específico
+-- Parâmetro: Id do usuário
+SELECT t.id, t.serie, t.ano, t.turno 
+            FROM Turma t
+            INNER JOIN Usuario_Turma ut ON t.id = ut.id_turma
+            WHERE ut.id_usuario = :id_usuario;
+
+-- Consulta de um usuário por seu email
+SELECT * FROM Usuario WHERE email = :email;
+
+-- Consulta de uma aluno específico
+-- Esta consulta traz todas as informações da tabela aluno, o nome de sua categoria, a sua série e o ano
+SELECT A.*, C.nome as nome_categoria, T.serie as serie_turma, T.ano as ano_turma, T.turno as turno_turma FROM
+            Aluno A
+            INNER JOIN Categoria_Renda C ON A.id_categoria = C.id
+            INNER JOIN Turma T ON A.id_turma = T.id
+            WHERE A.id = :id_aluno;
+
+-- Consulta da frequência do aluno
+-- Parâmetro id do aluno
+SELECT id_turma, id_calendario, assiduidade, C.* FROM
+            Frequencia F
+            INNER JOIN Calendario_Mes C ON C.id = F.id_calendario
+            WHERE id_aluno = :id_aluno;
+
+-- Consulta da média do aluno
+-- Parâmetro id do aluno
+SELECT nota, ano, semestre FROM Media WHERE id_aluno = :id_aluno;
+
+```
+
+## Script de Atualização
+```sql
+-- Atualização de um usuário
+-- Se quiser trocar senha
+UPDATE Usuario SET nome = :nome, email = :email, senha = :senha WHERE id = :id;
+-- Se modificar apenas email e nome
+UPDATE Usuario SET nome = :nome, email = :email WHERE id = :id;
+```
 para rodar: baixar docker e docker compose
 
 na raiz do projeto:
@@ -151,5 +299,5 @@ na raiz do projeto:
 - composer dump-autoload
 - composer update
 
-abrir app: localhost:8000 
-abrir phpmyadmin: localhost:8080 
+-abrir app: localhost:8000 
+-abrir phpmyadmin: localhost:8080 

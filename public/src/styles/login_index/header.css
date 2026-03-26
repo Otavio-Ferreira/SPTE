@@ -28,10 +28,8 @@
 
 .cabecalho-login {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: flex-end;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 15px;
     border-radius: 5px;
 }
 
@@ -54,5 +52,10 @@
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-weight: bold;
+}
+
+.cabecalho-logo-titulo .titulos {
+    font-size: 1.5em;
     font-weight: bold;
 }
