@@ -14,45 +14,45 @@
         <div class="card-body">
             <form method="POST" action="/adicionar/aluno/<?= $this->view->turma['id'] ?>" class="row g-3 align-items-center">
 
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control" name="nome" id="inputNome" placeholder="Nome do Aluno" required>
                         <label for="inputNome">Nome do Aluno</label>
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control" name="matricula" id="inputMatricula" placeholder="Matrícula" required>
                         <label for="inputMatricula">Matrícula</label>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="form-floating">
-                        <input type="text" class="form-control" name="rua" id="inputMatricula" placeholder="Matrícula" required>
-                        <label for="inputMatricula">Rua</label>
+                        <input type="text" class="form-control" name="rua" id="inputRua" placeholder="Rua" required>
+                        <label for="inputRua">Rua</label>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-floating">
-                        <input type="text" class="form-control" name="bairro" id="inputMatricula" placeholder="Matrícula" required>
-                        <label for="inputMatricula">Bairro</label>
+                        <input type="text" class="form-control" name="bairro" id="inputBairro" placeholder="Bairro" required>
+                        <label for="inputBairro">Bairro</label>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-floating">
-                        <input type="text" class="form-control" name="cidade" id="inputMatricula" placeholder="Matrícula" required>
-                        <label for="inputMatricula">Cidade</label>
+                        <input type="text" class="form-control" name="cidade" id="inputCidade" placeholder="Cidade" required>
+                        <label for="inputCidade">Cidade</label>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-floating">
-                        <input type="text" class="form-control" name="estado" id="inputMatricula" placeholder="Matrícula" required>
-                        <label for="inputMatricula">Estado</label>
+                        <input type="text" class="form-control" name="estado" id="inputEstado" placeholder="Estado" required>
+                        <label for="inputEstado">Estado</label>
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="form-floating">
                         <select class="form-select" name="id_categoria" id="selectResp" required>
                             <option value="" selected disabled>Selecione</option>
@@ -65,8 +65,8 @@
                 </div>
 
                 <div class="col-md-3 d-grid">
-                    <button class="btn btn-primary h-100" type="submit" style="background-color: var(--cor-primaria, #0d6efd); border-color: var(--cor-primaria, #0d6efd);">
-                        <i class="bi bi-plus-lg"></i> Adicionar Aluno
+                    <button class="btn btn-primary h-100 rounded-3 shadow-sm fw-bold" type="submit" style="background-color: var(--cor-primaria, #0d6efd); border-color: var(--cor-primaria, #0d6efd); min-height: 58px;">
+                        <i class="bi bi-plus-lg fs-5 me-1"></i> Adicionar Aluno
                     </button>
                 </div>
             </form>
@@ -96,8 +96,8 @@
         <table class="table table-hover table-striped align-middle text-center m-0">
             <thead class="table-light">
                 <tr>
-                    <th>Nome</th>
                     <th>Matrícula</th>
+                    <th>Nome</th>
                     <th style="width: 160px;">Detalhes</th>
                 </tr>
             </thead>
@@ -105,11 +105,11 @@
                 <?php if (!empty($this->view->alunos)): ?>
                     <?php foreach ($this->view->alunos as $aluno) : ?>
                         <tr>
+                            <td><?= htmlspecialchars($aluno['id']); ?></td>
                             <td><?= htmlspecialchars($aluno['nome']); ?></td>
-                            <td><?= htmlspecialchars($aluno['matricula']); ?></td>
                             <td>
-                                <a href="/aluno/<?= $aluno['id'] ?>" class="btn btn-ajax btn-sm btn-outline-primary d-flex align-items-center gap-1 mx-auto text-decoration-none" style="width: fit-content;">
-                                    <i class="bi bi-details"></i> Detalhes
+                                <a href="/aluno/<?= $aluno['id'] ?>" class="btn btn-sm text-primary fw-bold d-flex align-items-center justify-content-center gap-1 mx-auto text-decoration-none" style="background-color: rgba(13, 110, 253, 0.1); border-radius: 8px; width: 100px;">
+                                    <i class="bi bi-person-lines-fill"></i> Detalhes
                                 </a>
                             </td>
                         </tr>

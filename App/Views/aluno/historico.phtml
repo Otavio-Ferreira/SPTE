@@ -1,81 +1,114 @@
 <div class="secao" id="secao-historico">
   
-  <div class="d-flex align-items-center gap-3 mb-4 border-bottom pb-2">
-      <a href="/turma/alunos/<?= $this->view->aluno['id_turma'] ?>" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 btn-ajax">
-          <i class="bi bi-arrow-left"></i> Voltar para Turma
-      </a>
-      <h2 class="titulo fs-3 m-0" style="color: var(--cor-primaria, #0d6efd);">Histórico do Aluno</h2>
+  <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-2">
+      <div class="d-flex align-items-center gap-3">
+          <a href="/turma/alunos/<?= $this->view->aluno['id_turma'] ?>" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 btn-ajax">
+              <i class="bi bi-arrow-left"></i> Voltar para Turma
+          </a>
+          <h2 class="titulo fs-3 m-0 text-dark fw-bold">Perfil do Aluno</h2>
+      </div>
+      
+      <?php 
+        $risco = $this->view->risco;
+        $corRisco = $this->view->cor;
+        // if(strpos(strtolower($this->view->aluno['nome_categoria']), 'baixa') !== false) {
+        //     $risco = 'Alto';
+        //     $corRisco = 'bg-danger';
+        // } elseif (strpos(strtolower($this->view->aluno['nome_categoria']), 'média') !== false) {
+        //     $risco = 'Médio';
+        //     $corRisco = 'bg-warning text-dark';
+        // }
+      ?>
+      <span class="badge <?= $corRisco ?> fs-6 p-2 px-3 shadow-sm rounded-pill">
+          <i class="bi bi-shield-exclamation me-1"></i> Risco de Evasão: <?= $risco ?>
+      </span>
   </div>
 
-  <div class="card shadow-sm border-0 mb-4">
-      <div class="card-body bg-light rounded">
-          <h5 class="card-title text-primary mb-3"><i class="bi bi-person-badge"></i> Informações Pessoais</h5>
-          <div class="row text-secondary">
-              <div class="col-md-4">
-                  <strong>Nome:</strong> <br> <?= htmlspecialchars($this->view->aluno['nome'] ?? 'N/A'); ?>
+  <div class="card shadow border-0 mb-5 rounded-3 border-start border-4 border-primary">
+      <div class="card-body bg-white rounded-3 p-4">
+          <h5 class="card-title text-primary mb-4 fw-bold border-bottom pb-2">
+              <i class="bi bi-person-vcard fs-4 me-2 align-middle"></i> Dados do Estudante
+          </h5>
+   
+          <div class="row text-secondary g-4">
+              <div class="col-md-3">
+                  <span class="d-block text-muted small text-uppercase fw-bold">Nome Completo</span>
+                  <span class="fs-5 text-dark fw-semibold"><?= htmlspecialchars($this->view->aluno['nome'] ?? 'N/A'); ?></span>
               </div>
-              <div class="col-md-4">
-                  <strong>Matrícula:</strong> <br> <?= htmlspecialchars($this->view->aluno['matricula'] ?? 'N/A'); ?>
+              <div class="col-md-3">
+                  <span class="d-block text-muted small text-uppercase fw-bold">Matrícula</span>
+                  <span class="fs-5 text-dark"><?= htmlspecialchars($this->view->aluno['id'] ?? 'N/A'); ?></span>
               </div>
-              <div class="col-md-4">
-                  <strong>Rua:</strong> <br> <?= htmlspecialchars($this->view->aluno['rua'] ?? 'N/A'); ?>
+              <div class="col-md-3">
+                  <span class="d-block text-muted small text-uppercase fw-bold">Turma</span>
+                  <span class="fs-5 text-dark"><?= htmlspecialchars($this->view->aluno['serie_turma'] ?? 'N/A'); ?>º Ano - <?= htmlspecialchars($this->view->aluno['turno_turma'] ?? 'N/A'); ?></span>
               </div>
-              <div class="col-md-4">
-                  <strong>Bairro:</strong> <br> <?= htmlspecialchars($this->view->aluno['bairro'] ?? 'N/A'); ?>
+              <div class="col-md-3">
+                  <span class="d-block text-muted small text-uppercase fw-bold">Contexto Social</span>
+                  <span class="badge bg-light text-dark border p-2 mt-1">
+                      <i class="bi bi-house-heart"></i> <?= htmlspecialchars($this->view->aluno['nome_categoria'] ?? 'N/A'); ?>
+                  </span>
               </div>
-              <div class="col-md-4">
-                  <strong>Cidade:</strong> <br> <?= htmlspecialchars($this->view->aluno['cidade'] ?? 'N/A'); ?>
-              </div>
-              <div class="col-md-4">
-                  <strong>Estado:</strong> <br> <?= htmlspecialchars($this->view->aluno['estado'] ?? 'N/A'); ?>
-              </div>
-              <div class="col-md-4">
-                  <strong>Categoria de Renda:</strong> <br> <?= htmlspecialchars($this->view->aluno['nome_categoria'] ?? 'N/A'); ?>
-              </div>
-              <div class="col-md-4">
-                  <strong>Serie:</strong> <br> <?= htmlspecialchars($this->view->aluno['serie_turma'] ?? 'N/A'); ?>
-              </div>
-              <div class="col-md-4">
-                  <strong>Ano:</strong> <br> <?= htmlspecialchars($this->view->aluno['ano_turma'] ?? 'N/A'); ?>
-              </div>
-              <div class="col-md-4">
-                  <strong>Turno:</strong> <br> <?= htmlspecialchars($this->view->aluno['turno_turma'] ?? 'N/A'); ?>
+              
+              <div class="col-12 mt-4 pt-3 border-top">
+                   <span class="text-muted small fw-bold me-2"><i class="bi bi-geo-alt"></i> Endereço:</span>
+                   <?= htmlspecialchars($this->view->aluno['rua'] ?? 'N/A'); ?>, 
+                   <?= htmlspecialchars($this->view->aluno['bairro'] ?? 'N/A'); ?> - 
+                   <?= htmlspecialchars($this->view->aluno['cidade'] ?? 'N/A'); ?>/<?= htmlspecialchars($this->view->aluno['estado'] ?? 'N/A'); ?>
               </div>
           </div>
       </div>
   </div>
 
-  <div class="row mt-4">
+  <div class="row mt-4 g-4">
       
       <div class="col-md-6">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="m-0 text-secondary"><i class="bi bi-calendar-check"></i> Frequência</h5>
+          <div class="d-flex justify-content-between align-items-center mb-3 px-2">
+              <h5 class="m-0 text-dark fw-bold"><i class="bi bi-calendar-check text-primary fs-4 me-2 align-middle"></i> Frequência Mensal</h5>
           </div>
-          
-          <div class="table-responsive rounded shadow-sm border">
-              <table class="table table-hover table-striped align-middle text-center m-0">
+        
+          <div class="table-responsive bg-white rounded-3 shadow-sm border-0 p-2 h-100">
+              <table class="table table-hover align-middle text-center m-0">
                   <thead class="table-light">
                       <tr>
-                          <th>Mês</th>
-                          <th>Ano</th>
-                          <th>Assiduidade</th>
+                          <th class="text-secondary">Período</th>
+                          <th class="text-secondary text-start">Assiduidade</th>
                       </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="border-top-0">
                       <?php if (!empty($this->view->frequencias)): ?>
                           <?php foreach ($this->view->frequencias as $freq) : ?>
+                              <?php 
+                                  // Calcula a porcentagem para desenhar a barra de progresso
+                                  $presenca = intval($freq['assiduidade']);
+                                  $total = intval($freq['total_aulas_prevista']);
+                                  $porcentagem = ($total > 0) ? round(($presenca / $total) * 100) : 0;
+                                  
+                                  // Define a cor da barra baseada no risco (< 75% é vermelho)
+                                  $corBarra = 'bg-success';
+                                  if ($porcentagem < 75) $corBarra = 'bg-danger';
+                                  elseif ($porcentagem < 85) $corBarra = 'bg-warning';
+                              ?>
                               <tr>
-                                  <td><?= htmlspecialchars($freq['mes']); ?></td>
-                                  <td><?= htmlspecialchars($freq['ano']); ?></td>
-                                  <td class="fw-bold">
-                                      <?= htmlspecialchars($freq['assiduidade']); ?>/
-                                      <?= htmlspecialchars($freq['total_aulas_prevista']); ?>
+                                  <td class="text-muted fw-bold">Mês <?= htmlspecialchars($freq['mes']); ?>/<?= htmlspecialchars($freq['ano']); ?></td>
+                                  <td class="text-start">
+                                      <div class="d-flex align-items-center gap-2">
+                                          <div class="progress flex-grow-1" style="height: 10px;">
+                                              <div class="progress-bar <?= $corBarra ?>" role="progressbar" style="width: <?= $porcentagem ?>%" aria-valuenow="<?= $porcentagem ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                          </div>
+                                          <span class="small fw-bold <?= ($porcentagem < 75) ? 'text-danger' : 'text-success' ?>">
+                                              <?= htmlspecialchars($freq['assiduidade']); ?>/<?= htmlspecialchars($freq['total_aulas_prevista']); ?> (<?= $porcentagem ?>%)
+                                          </span>
+                                      </div>
                                   </td>
                               </tr>
                           <?php endforeach; ?>
                       <?php else: ?>
                           <tr>
-                              <td colspan="3" class="text-muted p-4">Nenhum registro de frequência encontrado.</td>
+                              <td colspan="2" class="text-muted p-5">
+                                  <i class="bi bi-calendar-x fs-2 d-block mb-2 text-light"></i>
+                                  Nenhum registro de frequência.
+                              </td>
                           </tr>
                       <?php endif; ?>
                   </tbody>
@@ -83,34 +116,46 @@
           </div>
       </div>
 
-      <div class="col-md-6 mt-4 mt-md-0">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="m-0 text-secondary"><i class="bi bi-journal-text"></i> Médias</h5>
+      <div class="col-md-6">
+          <div class="d-flex justify-content-between align-items-center mb-3 px-2">
+              <h5 class="m-0 text-dark fw-bold"><i class="bi bi-journal-text text-primary fs-4 me-2 align-middle"></i> Desempenho Acadêmico</h5>
           </div>
           
-          <div class="table-responsive rounded shadow-sm border">
-              <table class="table table-hover table-striped align-middle text-center m-0">
+          <div class="table-responsive bg-white rounded-3 shadow-sm border-0 p-2 h-100">
+              <table class="table table-hover align-middle text-center m-0">
                   <thead class="table-light">
                       <tr>
-                          <th>Ano</th>
-                          <th>Semestre</th>
-                          <th>Nota Final</th>
+                          <th class="text-secondary">Período</th>
+                          <th class="text-secondary">Nota Final</th>
+                          <th class="text-secondary">Status</th>
                       </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="border-top-0">
                       <?php if (!empty($this->view->medias)): ?>
                           <?php foreach ($this->view->medias as $media) : ?>
+                              <?php $aprovado = ($media['nota'] >= 7.0); ?>
                               <tr>
-                                  <td><?= htmlspecialchars($media['ano']); ?></td>
-                                  <td><?= htmlspecialchars($media['semestre']); ?>º</td>
-                                  <td class="fw-bold <?= ($media['nota'] >= 7.0) ? 'text-success' : 'text-danger' ?>">
-                                      <?= htmlspecialchars($media['nota']); ?>
+                                  <td class="text-muted fw-bold"><?= htmlspecialchars($media['semestre']); ?>º Sem. / <?= htmlspecialchars($media['ano']); ?></td>
+                                  <td>
+                                      <span class="fs-5 fw-bold <?= $aprovado ? 'text-success' : 'text-danger' ?>">
+                                          <?= number_format($media['nota'], 1, ',', '.'); ?>
+                                      </span>
+                                  </td>
+                                  <td>
+                                      <?php if($aprovado): ?>
+                                          <span class="badge bg-success-subtle text-success border border-success-subtle"><i class="bi bi-graph-up-arrow"></i> Bom</span>
+                                      <?php else: ?>
+                                          <span class="badge bg-danger-subtle text-danger border border-danger-subtle"><i class="bi bi-graph-down-arrow"></i> Alerta</span>
+                                      <?php endif; ?>
                                   </td>
                               </tr>
                           <?php endforeach; ?>
                       <?php else: ?>
                           <tr>
-                              <td colspan="3" class="text-muted p-4">Nenhum registro de notas encontrado.</td>
+                              <td colspan="3" class="text-muted p-5">
+                                  <i class="bi bi-journal-x fs-2 d-block mb-2 text-light"></i>
+                                  Nenhum registro de notas.
+                              </td>
                           </tr>
                       <?php endif; ?>
                   </tbody>
